@@ -16,7 +16,7 @@ const MainContainer = styled.View`
   align-items: center;
   font-size: 36px;
   flex-grow: 1;
-  border: 1px solid red;
+  background: #efefef;
 `;
 // component
 

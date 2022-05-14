@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import type {Node} from 'react';
 // import tag
 import {
@@ -12,46 +12,40 @@ import {
 } from 'react-native';
 
 // header
-import Header from '~/components/Header';
+import {HeaderOption, TmpImg} from '~/components/Header';
 // page
 import Main from '~/pages/Main';
 
 // import styled-component
 import styled, {css} from 'styled-components/native';
 
+// react-navigation
+import { CurrentRenderContext, NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Header } from '@react-navigation/stack';
+
+const Tab = createBottomTabNavigator();
+
 // style
-const StyledScrollView = styled(ScrollView)`
- /* 영역 확인용 임시 스타일 */
-   height: 100%;
-  background: #efefef;
-  // background: #222;
-`;
-const ContentContainer = styled.View`
-  height: 100%;
-  border: 1px solid #000;
-`;
 
 const App: () => Node = () => {
-  return (
-    <SafeAreaView>
-      <StatusBar barStyle="dark-content" backgroundColor={'transparent'} />
-      <StyledScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        >
-        {/* 헤더 시작 */}
-        <Header />   
-        {/* 헤더 끝 */}
-        {/* 컨텐츠 시작 */}
-        <ContentContainer>
-          {/* router 사용해서 페이지 보일 예정 */}
-          <Main />
-        </ContentContainer>      
-        {/* 컨텐츠 끝 */}
-        {/* 푸터 시작 */}
-          {/* 여기에 푸터 컴포넌트 삽입 */}
-        {/* 푸터 끝 */}
-      </StyledScrollView>
-    </SafeAreaView>
+  return (    
+    <NavigationContainer>
+      <StatusBar
+        backgroundColor="#fff"
+        barStyle="dark-content"/>       
+    <Tab.Navigator
+      screenOptions={HeaderOption}>
+        <Tab.Screen name="Main" component={Main} />    
+        <Tab.Screen name="Main2" component={Main}  options={{ headerTitle: '방울이'}} />     
+        <Tab.Screen name="Main3" component={Main} 
+        options={{ 
+          headerTitle: '푸름이', 
+          headerRight: () => (<TmpImg colorProps="salmon"/>),
+        }}/>
+        <Tab.Screen name="Main4" component={Main}  />      
+    </Tab.Navigator>
+  </NavigationContainer>
   );
 };
 
