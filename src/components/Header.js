@@ -1,51 +1,22 @@
 import React from 'react';
 // import tag
 import {
-  Text,
-  View,
   Image
 } from 'react-native';
 // import styled-component
 import styled, {css} from 'styled-components/native';
+// img
+const folderIconImg = require('../assets/icon-folder.png');
 
-// style
-// const StyledHeader = styled.View`
-// height: 45px;
-// display: flex;
-// padding: 0 20px;
-// flex-direction: row;
-// justify-content: space-between;
-// align-items: center;
-//   background: #fff;
-//   box-shadow: 0px 2px 5px rgba(0,0,0,0.5);
-//   border: 1px solid red;
-// `
-// const AppTitle = styled.Text`
-// font-size: 20px;
-// color: #707070;
-// font-weight: 600;
-// `;
-
-const TmpImg = styled.View`
-  width: 32px;
-  height: 25px;
-  background-color:  ${(props) => props.colorProps || "#2699fb"};
+const StyledFolderMenu = styled.Image`
+width: 27px;
+height: 27px;
 `;
-
-// // component
-// const Header = (navigation) => {
-//   return(
-//     <StyledHeader>
-//       <AppTitle>이후애</AppTitle>
-//       {/* header menu start */}
-//       <View>
-//         <TmpImg></TmpImg>
-//       </View>
-//       {/* header menu end
-//        */}
-//     </StyledHeader>
-//   );
-// }
+const FolderMenu = () => {
+  return(
+    <StyledFolderMenu source={folderIconImg}/>
+  );
+}
 
 const HeaderOption = {
   // header : (navigation) => (<Header />),
@@ -53,8 +24,10 @@ const HeaderOption = {
   // title
   headerTitleStyle: {
     fontWeight: 'bold',
-    color: '#707070',
+    color: '#000',
     fontSize: 20,
+    fontFamily: "GmarketSansTTFMedium",
+    fontWeight: "200"
   },
   headerTitleAlign: 'left',
   headerTitleContainerStyle:{   
@@ -67,19 +40,19 @@ const HeaderOption = {
     padding: 20,
   },
   headerStyle: {
-    height: 45,
+    height: 43,
     backgroundColor: "#fff",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
+    shadowOpacity: 0.1,
+    shadowRadius: 2,
     elevation: 15,
-    },    
-    headerRight: () => (<TmpImg/>),
+    },   
+   
 }
 
 // export default HeaderOption;
-export {HeaderOption, TmpImg};
+export {HeaderOption, FolderMenu};
