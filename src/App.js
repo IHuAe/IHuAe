@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 
 // header
-import {HeaderOption, TmpImg} from '~/components/Header';
+import {HeaderOption, FolderMenu} from '~/components/Header';
 // page
 import Main from '~/pages/Main';
 
@@ -30,18 +30,17 @@ const Tab = createBottomTabNavigator();
 
 const App: () => Node = () => {
   return (    
-    <NavigationContainer>
+    <NavigationContainer>    
       <StatusBar
         backgroundColor="#fff"
         barStyle="dark-content"/>       
     <Tab.Navigator
       screenOptions={HeaderOption}>
-        <Tab.Screen name="Main" component={Main} />    
+        <Tab.Screen name="Main" component={Main} options={{ headerRight: () => (<FolderMenu/>),}}/>    
         <Tab.Screen name="Main2" component={Main}  options={{ headerTitle: '방울이'}} />     
         <Tab.Screen name="Main3" component={Main} 
         options={{ 
-          headerTitle: '푸름이', 
-          headerRight: () => (<TmpImg colorProps="salmon"/>),
+          headerTitle: '푸름이',           
         }}/>
         <Tab.Screen name="Main4" component={Main}  />      
     </Tab.Navigator>
