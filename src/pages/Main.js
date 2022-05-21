@@ -10,6 +10,7 @@ import {
 import styled, {css} from 'styled-components/native';
 // import component
 import RoundStyledButton from '~/components/ButtonComponent';
+import {DefaultText, DefaultMediumText, DefaultBoldText} from '~/components/DefaultText';
 
 // style
 const MainContainer = styled.View`
@@ -24,9 +25,8 @@ const DayCounterContainer = styled.View`
   margin-top: 23px;
   margin-bottom: 27px;  
 `;
-const DayCounter = styled.Text`
+const DayCounter = styled(DefaultBoldText)`
   color: #FFBF6A;
-  font-weight: bold;
   font-size: 20px;
 `;
 const MainCard = styled.View`
@@ -36,10 +36,9 @@ const MainCard = styled.View`
   padding: 40px 20px;
 `;
 
-const MainCardText = styled.Text`
+const MainCardText = styled(DefaultBoldText)`
   color: #847144;
-  font-weight: bold;
-  font-size: 20px;
+  font-size: 20px;  
 `;
 
 const TodayFeelContainer = styled.View`
@@ -51,9 +50,8 @@ const TodayFeelContainer = styled.View`
   justify-content: space-between;
   align-items: center;
 `;
-const TodayFeelTitle = styled.Text`
+const TodayFeelTitle = styled(DefaultMediumText)`
   color: #847144;
-  font-weight: 500;
   font-size: 20px;  
 `;
 
@@ -62,10 +60,11 @@ const TodayQuestionContainer = styled.View`
   margin-top: 25px;
 `;
 
-const TodayQuestionTitle = styled.Text`
+const TodayQuestionTitle = styled(DefaultText)`
   font-size: 20px;
   font-weight: 400;
   color: #847144;
+  
 `;
 
 // component
