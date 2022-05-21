@@ -9,7 +9,17 @@ import {
   Text,
   useColorScheme,
   View,
+  Image
 } from 'react-native';
+
+
+const icons = {
+  Home: require("./assets/icon/tab_off_ic_home.png"),
+  Cal: require("./assets/icon/tab_off_ic_date.png"),
+  Edit: require("./assets/icon/tab_off_ic_edit.png"),
+  Message: require("./assets/icon/tab_off_ic_message.png"),
+};
+
 
 // header
 import {HeaderOption, FolderMenu} from '~/components/Header';
@@ -20,9 +30,15 @@ import Main from '~/pages/Main';
 import styled, {css} from 'styled-components/native';
 
 // react-navigation
+//                                                    <Ionicons
+//                                                        name="ios_home"
+//                                                        style={{ color: focused ? "#FFBF6A" : "#C4C4C4" }}
+//                                                        size={30}
+//                                                    />
 import { CurrentRenderContext, NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Header } from '@react-navigation/stack';
+//import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 
@@ -36,13 +52,78 @@ const App: () => Node = () => {
         barStyle="dark-content"/>       
     <Tab.Navigator
       screenOptions={HeaderOption}>
-        <Tab.Screen name="Main" component={Main} options={{ headerRight: () => (<FolderMenu/>),}}/>    
-        <Tab.Screen name="Main2" component={Main}  options={{ headerTitle: '방울이'}} />     
-        <Tab.Screen name="Main3" component={Main} 
-        options={{ 
-          headerTitle: '푸름이',           
+        <Tab.Screen
+            name="Main"
+            component={Main}
+            options={{
+                            headerRight: () => (<FolderMenu/>),
+                            tabBarIcon: ({ focused }) => (
+                                                    <Image
+                                                        style={{
+                                                              tintColor: focused? "#FFBF6A" : "#C4C4C4",
+                                                              resizeMode: "contain",
+                                                              height: 31,
+                                                              width: 31
+                                                        }}
+                                                        source={icons.Home}
+                                                    />
+                            ),
+                            tabBarLabel:() => {return null},
         }}/>
-        <Tab.Screen name="Main4" component={Main}  />      
+        <Tab.Screen
+            name="Main2"
+            component={Main}
+            options={{
+                            headerTitle: '방울이',
+                            tabBarIcon: ({ focused }) => (
+                                                    <Image
+                                                        style={{
+                                                              tintColor: focused? "#FFBF6A" : "#C4C4C4",
+                                                              resizeMode: "contain",
+                                                              height: 31,
+                                                              width: 31
+                                                        }}
+                                                        source={icons.Cal}
+                                                    />
+                            ),
+                            tabBarLabel:() => {return null},
+
+        }}/>
+        <Tab.Screen
+            name="Main3"
+            component={Main}
+            options={{
+                          headerTitle: '푸름이',
+                          tabBarIcon: ({ focused }) => (
+                                                    <Image
+                                                        style={{
+                                                              tintColor: focused? "#FFBF6A" : "#C4C4C4",
+                                                              resizeMode: "contain",
+                                                              height: 31,
+                                                              width: 31
+                                                        }}
+                                                        source={icons.Edit}
+                                                    />
+                          ),
+                          tabBarLabel:() => {return null},
+        }}/>
+        <Tab.Screen
+            name="Main4"
+            component={Main}
+            options={{
+                        tabBarIcon: ({ focused }) => (
+                                                        <Image
+                                                            style={{
+                                                                  tintColor: focused? "#FFBF6A" : "#C4C4C4",
+                                                                  resizeMode: "contain",
+                                                                  height: 31,
+                                                                  width: 31
+                                                            }}
+                                                            source={icons.Message}
+                                                        />
+                        ),
+                        tabBarLabel:() => {return null},
+        }}/>
     </Tab.Navigator>
   </NavigationContainer>
   );
