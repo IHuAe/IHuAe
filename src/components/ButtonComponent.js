@@ -13,14 +13,11 @@ import {DefaultMediumText} from '~/components/DefaultText';
 
 // component
 const RoundStyledButton = styled.TouchableOpacity`
-
-  padding: 10px 28px;
-  
+  padding: 10px 28px;  
   text-align: center;  
   background-color: ${(props) => props.bgColor || '#fff'};
   color: ${(props) => props.textColor || '#22222'};
   border-radius: 100px;
-  box-shadow: 0px 4px 4px rgba(0,0,0,0.05);
  
 `;
 
@@ -30,7 +27,17 @@ font-size: 14px;
 
 const ButtonComponent = ({title, color, textColor}) => {
   return(
-    < RoundStyledButton  color={color} textColor={textColor}>
+    < RoundStyledButton  color={color} textColor={textColor} 
+    style={{ 
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: -4,
+      },
+      shadowOpacity: 0.1,
+      shadowRadius: 0,
+      elevation: 3, }}
+    >
       <ButtonText>
         {title}
       </ButtonText>

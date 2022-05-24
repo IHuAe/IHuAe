@@ -6,7 +6,7 @@ import styled from 'styled-components/native';
 import {BoxShadow} from 'react-native-shadow'
 
 // img
-const folderIconImg = require('../assets/icon-folder.png');
+const folderIconImg = require("../assets/icon/ic_folder.png");
 
 const StyledFolderMenu = styled.Image`
 width: 27px;
@@ -60,15 +60,12 @@ const HeaderOption = {
         width: 0,
         height: -4,
       },
-      shadowOpacity: 0,
+      shadowOpacity: 0.1,
       shadowRadius: 0,
-      elevation: 10,
+      elevation: 20,
       position: 'absolute',
       bottom: 0,
       marginBottom: 0,
-      borderWidth: 1,
-      borderColor: 'red',
-      borderTopColor: 'red',
     },
    
 }
