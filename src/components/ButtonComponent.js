@@ -25,9 +25,9 @@ const ButtonText = styled(DefaultMediumText)`
 font-size: 14px;
 `;
 
-const ButtonComponent = ({title, color, textColor}) => {
+const ButtonComponent = ({title, color, textColor, onPress}) => {
   return(
-    < RoundStyledButton  color={color} textColor={textColor} 
+    < RoundStyledButton activeOpacity={0.7}  color={color} textColor={textColor} onPress={onPress || null }
     style={{ 
       shadowColor: "#000",
       shadowOffset: {

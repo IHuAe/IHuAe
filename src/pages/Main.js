@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 // import tag
 import {
   Text,
@@ -12,6 +12,7 @@ import styled, {css} from 'styled-components/native';
 // import component
 import RoundStyledButton from '~/components/ButtonComponent';
 import {DefaultText, DefaultMediumText, DefaultBoldText} from '~/components/DefaultText';
+import HeaderModal  from '~/components/HeaderModal';
 
 const img = {
   Img01: require("../assets/card/img01.png"),
@@ -97,6 +98,13 @@ const TodayQuestionTitle = styled(DefaultText)`
 // component
 
 const Main = () => {
+  // Modal state
+  const [modalVisible, setModalVisible] = useState(false);
+  // const closeModal = () => {
+  //   this.setState({})
+  // }
+  const test = modalVisible ? 'modalvisible' : 'modalVisiblefalse';
+         
   return(
     <MainContainer>
       <DayCounterContainer>
@@ -113,19 +121,20 @@ const Main = () => {
       </MainCard>
 
       <TodayFeelContainer>        
-        <TodayFeelLeftArea>
+        <TodayFeelLeftArea >
             <TodayFeelTitle>
-                오늘의 기분         
+                오늘의 기분       
             </TodayFeelTitle>  
             <TodayFeelIcon source={icon.Smile} />
         </TodayFeelLeftArea>      
-        <RoundStyledButton title="기록하기" color='#222' textColor='#222' />     
+        <RoundStyledButton onPress={()=> {setModalVisible(true)}} title="기록하기" color='#222' textColor='#222'/>     
       </TodayFeelContainer>
       <TodayQuestionContainer>
         <TodayQuestionTitle>
-         오늘의 문답 모음
+         오늘의 문답 모음 
         </TodayQuestionTitle>        
       </TodayQuestionContainer>
+      <HeaderModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
     </MainContainer>
   );
 }
