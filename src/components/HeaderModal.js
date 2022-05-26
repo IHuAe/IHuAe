@@ -2,11 +2,13 @@ import React, { useState } from "react";
 
 import Modal from "react-native-modal";
 // import tag
-import { Text, View, Button, TextInput } from "react-native";
+import { Text, View, Button, TextInput, Image, TouchableWithoutFeedback } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 // import styled-component
 import styled from "styled-components/native";
 // import component
 import {DefaultText, DefaultMediumText, DefaultBoldText} from '~/components/DefaultText';
+import ButtonComponent from '~/components/ButtonComponent';
 
 const ModalContainer = styled.View`
   width: 88.8%;
@@ -20,6 +22,15 @@ const ModalContainer = styled.View`
 const ModalContents = styled.View`
 flex: 1;
 `
+
+const CloseBtnContainer = styled.View`
+  flex-direction: row;
+  justify-content: flex-end;
+`;
+const CloseBtn = styled.Image`
+  width: 17px;
+  height: 17px;
+`;
 const ModalTitle = styled(DefaultText)`
   font-size: 20px;
   color: #000;
@@ -49,12 +60,15 @@ const StyledTextInput = styled.TextInput`
 `;
 
 const RegisterBtnArea = styled.View`
-  border: 1px solid red;
+align-items: center;
 `;
 
-const HeaderModal = ({modalVisible, setModalVisible}) => {
+const icon = {
+  Close : require("../assets/icon/ic_cancel.png"),
+ }
 
-  
+const HeaderModal = ({modalVisible, setModalVisible}) => {
+ 
   return(
       <Modal 
       animationIn={'fadeInUp'}
@@ -71,9 +85,11 @@ const HeaderModal = ({modalVisible, setModalVisible}) => {
       }}
       >
         <ModalContainer style={{elevation: 5,}}>
-          <View>
-            <Button title="닫기" onPress={()=> {setModalVisible(false)}}/>
-          </View>
+          <CloseBtnContainer>
+            <TouchableWithoutFeedback onPress={()=> {setModalVisible(false)}}> 
+            <CloseBtn source={icon.Close} />
+            </TouchableWithoutFeedback>           
+          </CloseBtnContainer>
         <ModalContents>
           <View>
               <ModalTitle>오늘의 기분을 기록해주세요</ModalTitle>
@@ -87,8 +103,16 @@ const HeaderModal = ({modalVisible, setModalVisible}) => {
             </TextInputArea>
         </ModalContents>
           <RegisterBtnArea>
-            <Button title="등록하기" onPress={()=> {setModalVisible(false)}}/>
+            <ButtonComponent 
+            fontSize="15px" 
+            onPress={()=> {setModalVisible(false)}} 
+            round="5px" title="등록하기" color='#f5f5f5' textColor='#636363'
+            width='250px'
+            height='41px'
+            shadow={1}
+            />
           </RegisterBtnArea>
+
         </ModalContainer>
       </Modal>
   )

@@ -10,7 +10,7 @@ import {
 // import styled-component
 import styled, {css} from 'styled-components/native';
 // import component
-import RoundStyledButton from '~/components/ButtonComponent';
+import ButtonComponent from '~/components/ButtonComponent';
 import {DefaultText, DefaultMediumText, DefaultBoldText} from '~/components/DefaultText';
 import HeaderModal  from '~/components/HeaderModal';
 
@@ -127,7 +127,7 @@ const Main = () => {
             </TodayFeelTitle>  
             <TodayFeelIcon source={icon.Smile} />
         </TodayFeelLeftArea>      
-        <RoundStyledButton onPress={()=> {setModalVisible(true)}} title="기록하기" color='#222' textColor='#222'/>     
+        <ButtonComponent shadow={3} onPress={()=> {setModalVisible(true)}} title="기록하기" round='100px' textColor='#222'/>     
       </TodayFeelContainer>
       <TodayQuestionContainer>
         <TodayQuestionTitle>

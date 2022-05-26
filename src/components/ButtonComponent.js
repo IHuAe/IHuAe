@@ -12,22 +12,35 @@ import {DefaultMediumText} from '~/components/DefaultText';
 // style
 
 // component
-const RoundStyledButton = styled.TouchableOpacity`
+const StyledButton = styled.TouchableOpacity`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: ${(props) => props.width || 'auto'};
+  height: ${(props) => props.height || 'auto'};
   padding: 10px 28px;  
   text-align: center;  
   background-color: ${(props) => props.bgColor || '#fff'};
   color: ${(props) => props.textColor || '#22222'};
-  border-radius: 100px;
- 
+  border-radius: ${(props)=> props.round || '0px'};
+  text-align: ${(props) => props.textAlign || 'center'};
 `;
 
 const ButtonText = styled(DefaultMediumText)`
-font-size: 14px;
+font-size: ${(props) => props.fontSize || '14px'};
 `;
 
-const ButtonComponent = ({title, color, textColor, onPress}) => {
+const ButtonComponent = ({title, color, textColor, onPress, round, fontSize, textAlign, shadow, width, height}) => {
   return(
-    < RoundStyledButton activeOpacity={0.7}  color={color} textColor={textColor} onPress={onPress || null }
+    < StyledButton 
+    activeOpacity={0.7} 
+    textAlign={textAlign} 
+    bgColor={color} 
+    round={round || ''} 
+    textColor={textColor} 
+    onPress={onPress || null }
+    width={width}
+    height={height}
     style={{ 
       shadowColor: "#000",
       shadowOffset: {
@@ -36,12 +49,12 @@ const ButtonComponent = ({title, color, textColor, onPress}) => {
       },
       shadowOpacity: 0.1,
       shadowRadius: 0,
-      elevation: 3, }}
+      elevation: shadow || 0, }}
     >
-      <ButtonText>
+      <ButtonText fontSize={fontSize} >
         {title}
       </ButtonText>
-    </ RoundStyledButton>
+    </ StyledButton>
       
   )
 }
