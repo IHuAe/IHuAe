@@ -103,7 +103,7 @@ const App: () => Node = () => {
         }}/>
         <Tab.Screen
             name="Main4"
-            component={Main}
+            component={Main}            
             options={{
                 tabBarIcon: ({ focused }) => (
                     <Image

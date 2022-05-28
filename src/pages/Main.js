@@ -1,15 +1,25 @@
-import React from 'react';
+import React, {useState} from 'react';
 // import tag
 import {
   Text,
   View,
   Image,
-  Button
+  Button,
+  ImageBackground
 } from 'react-native';
 // import styled-component
 import styled, {css} from 'styled-components/native';
 // import component
-import RoundStyledButton from '~/components/ButtonComponent';
+import ButtonComponent from '~/components/ButtonComponent';
+import {DefaultText, DefaultMediumText, DefaultBoldText} from '~/components/DefaultText';
+import HeaderModal  from '~/components/HeaderModal';
+
+const img = {
+  Img01: require("../assets/card/img01.png"),
+};
+const icon = {
+ Smile : require("../assets/icon/ic_smile.png"),
+}
 
 // style
 const MainContainer = styled.View`
@@ -24,22 +34,26 @@ const DayCounterContainer = styled.View`
   margin-top: 23px;
   margin-bottom: 27px;  
 `;
-const DayCounter = styled.Text`
+const DayCounter = styled(DefaultBoldText)`
   color: #FFBF6A;
-  font-weight: bold;
   font-size: 20px;
 `;
 const MainCard = styled.View`
   width: 100%;
   height: 238px;
-  background-color: #F9DF84;
-  padding: 40px 20px;
+  
 `;
 
-const MainCardText = styled.Text`
+const MainCardBg = styled.ImageBackground`
+  width: 100%;
+  height: 100%;
+  
+`;
+
+const MainCardText = styled(DefaultBoldText)`
+  padding: 40px 20px;
   color: #847144;
-  font-weight: bold;
-  font-size: 20px;
+  font-size: 20px;  
 `;
 
 const TodayFeelContainer = styled.View`
@@ -51,10 +65,22 @@ const TodayFeelContainer = styled.View`
   justify-content: space-between;
   align-items: center;
 `;
-const TodayFeelTitle = styled.Text`
+
+const TodayFeelLeftArea = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
+
+const TodayFeelTitle = styled(DefaultMediumText)`
   color: #847144;
-  font-weight: 500;
   font-size: 20px;  
+`;
+
+const TodayFeelIcon = styled.Image`
+  width: 28px;
+  height: 28px;
+  margin-left: 6px;
 `;
 
 const TodayQuestionContainer = styled.View`
@@ -62,15 +88,23 @@ const TodayQuestionContainer = styled.View`
   margin-top: 25px;
 `;
 
-const TodayQuestionTitle = styled.Text`
+const TodayQuestionTitle = styled(DefaultText)`
   font-size: 20px;
   font-weight: 400;
   color: #847144;
+  
 `;
 
 // component
 
 const Main = () => {
+  // Modal state
+  const [modalVisible, setModalVisible] = useState(false);
+  // const closeModal = () => {
+  //   this.setState({})
+  // }
+  const test = modalVisible ? 'modalvisible' : 'modalVisiblefalse';
+         
   return(
     <MainContainer>
       <DayCounterContainer>
@@ -78,23 +112,29 @@ const Main = () => {
       </DayCounterContainer>
       
       <MainCard>
-        <MainCardText>
-          오늘은 좋아하는 걸 {'\n'}
-          적어보는 건 어때요?
-        </MainCardText>        
+      <MainCardBg source={img.Img01}>
+          <MainCardText>
+            오늘은 좋아하는 걸 {'\n'}
+            적어보는 건 어때요?
+          </MainCardText>   
+        </ MainCardBg >     
       </MainCard>
 
-      <TodayFeelContainer>
-        <TodayFeelTitle>
-         오늘의 기분         
-        </TodayFeelTitle>   
-        <RoundStyledButton title="기록하기" color='#222' textColor='#222'/>     
+      <TodayFeelContainer>        
+        <TodayFeelLeftArea >
+            <TodayFeelTitle>
+                오늘의 기분       
+            </TodayFeelTitle>  
+            <TodayFeelIcon source={icon.Smile} />
+        </TodayFeelLeftArea>      
+        <ButtonComponent shadow={3} onPress={()=> {setModalVisible(true)}} title="기록하기" round='100px' textColor='#222'/>     
       </TodayFeelContainer>
       <TodayQuestionContainer>
         <TodayQuestionTitle>
-         오늘의 문답 모음
+         오늘의 문답 모음 
         </TodayQuestionTitle>        
       </TodayQuestionContainer>
+      <HeaderModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
     </MainContainer>
   );
 }

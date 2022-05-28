@@ -1,12 +1,12 @@
 import React from 'react';
-// import tag
-import {
-  Image
-} from 'react-native';
+
 // import styled-component
-import styled, {css} from 'styled-components/native';
+import styled from 'styled-components/native';
+//import boxShadow for android
+import {BoxShadow} from 'react-native-shadow'
+
 // img
-const folderIconImg = require('../assets/icon-folder.png');
+const folderIconImg = require("../assets/icon/ic_folder.png");
 
 const StyledFolderMenu = styled.Image`
 width: 27px;
@@ -50,7 +50,23 @@ const HeaderOption = {
     shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 15,
-    },   
+    },  
+    tabBarStyle: { 
+      height: 75,
+      borderTopLeftRadius: 5,
+      borderTopRightRadius: 5,
+      shadowColor: "#000",
+      shadowOffset: {
+        width: 0,
+        height: -4,
+      },
+      shadowOpacity: 0.1,
+      shadowRadius: 0,
+      elevation: 20,
+      position: 'absolute',
+      bottom: 0,
+      marginBottom: 0,
+    },
    
 }
 
