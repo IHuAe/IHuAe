@@ -41,7 +41,25 @@ const TodayFeelArea = styled.View`
   width: 100%;
   height: 180px;
   margin-top: 32px;
-  background-color: #c4c4c4;
+  // background-color: #c4c4c4;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: space-between;
+`;
+
+
+const StyledTodayFeelIcon = styled.TouchableOpacity`
+  width: 75px;
+  height: 75px;
+  justify-content: center;
+  align-items: center;
+`;
+const StyledTodayFeelImg = styled.Image`
+  width: 100%;
+  opacity: ${(props) => (props.active == props.type) ? 1 : 0.2};
+  ${(props) => (props.active == props.type) || `tint-color: gray;`}
+
 `;
 
 const TextInputArea = styled.View`
@@ -56,19 +74,43 @@ const StyledTextInput = styled.TextInput`
   border-radius: 3px;
   padding: 3px 9px;
   margin-top: 10px;
-  font-size: 13px;
+  font-size: 13px;  
 `;
 
 const RegisterBtnArea = styled.View`
 align-items: center;
 `;
 
+
 const icon = {
   Close : require("../assets/icon/ic_cancel.png"),
  }
 
 const HeaderModal = ({modalVisible, setModalVisible}) => {
- 
+  const [feelIcon , setfeelIcon] = useState('');
+  const [todayDiary , setTodayDiary] = useState('');
+
+  const TodayFeelIcon = [
+    // dummy data
+    {type: 'feel1', img: require('../assets/icon/ic_feel_01.png')},
+    {type: 'feel2', img: require('../assets/icon/ic_feel_02.png')},
+    {type: 'feel3', img: require('../assets/icon/ic_feel_03.png')},
+    {type: 'feel4', img: require('../assets/icon/ic_feel_04.png')},
+    {type: 'feel5', img: require('../assets/icon/ic_feel_05.png')},
+    {type: 'feel6', img: require('../assets/icon/ic_feel_06.png')},
+  ]
+
+  const registerFeel = () => {    
+    setModalVisible(false);
+  }
+
+  const closeModal = () => {
+    //  no register
+    setTodayDiary('');
+    setfeelIcon('');
+    setModalVisible(false);
+  }
+
   return(
       <Modal 
       animationIn={'fadeInUp'}
@@ -86,7 +128,7 @@ const HeaderModal = ({modalVisible, setModalVisible}) => {
       >
         <ModalContainer style={{elevation: 5,}}>
           <CloseBtnContainer>
-            <TouchableWithoutFeedback onPress={()=> {setModalVisible(false)}}> 
+            <TouchableWithoutFeedback onPress={closeModal}> 
             <CloseBtn source={icon.Close} />
             </TouchableWithoutFeedback>           
           </CloseBtnContainer>
@@ -95,17 +137,25 @@ const HeaderModal = ({modalVisible, setModalVisible}) => {
               <ModalTitle>오늘의 기분을 기록해주세요</ModalTitle>
             </View>
             <TodayFeelArea>
-              <Text>list area</Text>
+              {
+                TodayFeelIcon.map((li) => {
+                  return(
+                    <StyledTodayFeelIcon activeOpacity={1}  key={li.type}  onPress={()=>{setfeelIcon(li.type)}}>
+                      <StyledTodayFeelImg resizeMode="contain" type={li.type} active={feelIcon} resizeMethod="resize" source={li.img} />
+                    </ StyledTodayFeelIcon>
+                  );
+                })
+              }
             </TodayFeelArea>
             <TextInputArea>
                 <StyledTextInputLabel>한마디로 표현하자면?</StyledTextInputLabel>
-                <StyledTextInput placeholderTextColor="#CBCBCB" placeholder="10자 이내로 작성해주세요.(생략가능)" maxLength={10} />
+                <StyledTextInput value={todayDiary} onChangeText={(text)=>{setTodayDiary(text); console.log(text)}} placeholderTextColor="#CBCBCB" placeholder="10자 이내로 작성해주세요.(생략가능)" maxLength={10} />
             </TextInputArea>
         </ModalContents>
           <RegisterBtnArea>
             <ButtonComponent 
             fontSize="15px" 
-            onPress={()=> {setModalVisible(false)}} 
+            onPress={registerFeel} 
             round="5px" title="등록하기" color='#f5f5f5' textColor='#636363'
             width='250px'
             height='41px'
