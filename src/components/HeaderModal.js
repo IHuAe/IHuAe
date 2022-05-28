@@ -86,9 +86,11 @@ const icon = {
   Close : require("../assets/icon/ic_cancel.png"),
  }
 
-const HeaderModal = ({modalVisible, setModalVisible}) => {
+const HeaderModal = ({modalVisible, setModalVisible}) => {  
   const [feelIcon , setfeelIcon] = useState('');
   const [todayDiary , setTodayDiary] = useState('');
+  const [prevFeelIcon, setPrevFeelIcon] = useState('');
+  const [prevDiary, setPrevDiary] = useState('')
 
   const TodayFeelIcon = [
     // dummy data
@@ -100,14 +102,16 @@ const HeaderModal = ({modalVisible, setModalVisible}) => {
     {type: 'feel6', img: require('../assets/icon/ic_feel_06.png')},
   ]
 
-  const registerFeel = () => {    
+  const registerFeel = () => {        
+    setPrevDiary(todayDiary);
+    setPrevFeelIcon(feelIcon);
     setModalVisible(false);
   }
 
   const closeModal = () => {
-    //  no register
-    setTodayDiary('');
-    setfeelIcon('');
+    //  미등록 시 이전 상태 불러오기
+    setTodayDiary(prevDiary);
+    setfeelIcon(prevFeelIcon);
     setModalVisible(false);
   }
 
