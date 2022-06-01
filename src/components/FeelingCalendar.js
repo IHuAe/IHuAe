@@ -1,9 +1,12 @@
-import React from 'react';
-import { Text, ToastAndroid } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { View, Text, ToastAndroid } from 'react-native';
 import styled  from 'styled-components/native';
+import {DefaultText} from '~/components/DefaultText';
+import DayCounter from '~/components/DayCounter';
 
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import {LocaleConfig} from 'react-native-calendars';
+
 
 LocaleConfig.locales['fr'] = {
   monthNames: ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'],
@@ -15,39 +18,100 @@ LocaleConfig.locales['fr'] = {
 LocaleConfig.defaultLocale = 'fr';
 
 
+const CalendarContainer = styled.View`
+background: #ffffff;
+  height: 100%;
+  padding: 0 20px;
+`;
+
+const DayCounterContainer = styled.View`
+margin-top: 23px;
+`;
+
+const DiaryContainer = styled.View`
+
+  margin-top: 7px;
+  background-color: #F3F3F3;
+  padding: 10px 16px;
+  border-radius: 5px;
+`;
+
+const StyledDefaultText = styled(DefaultText)`
+  color: #000;
+  font-size: 13px;
+
+`;
 
 const FeelingCalendar = () => {
- 
-  return(
-    <Calendar
-    current={'2020-06-07'}
-    minDate={'2020-01-01'}
-    maxDate={'2020-12-31'}
-    onDayPress={(day) => {
-      console.log('selected day', day)
-      ToastAndroid.showWithGravity(
-        day.dateString,
-        ToastAndroid.SHORT,
-        ToastAndroid.CENTER
-      );   
-    }}    
-    onDayLongPress={(day) => {console.log('selected day', day)}}    
-    monthFormat={'yyyy MM'}
+ const [selectedDay, setSelectedDay] = useState('');
+ const [selectedDate, setSelectedDate] = useState('');
 
-    onMonthChange={(month) => {console.log('month changed', month)}}
-    hideArrows={true}
-    renderArrow={(direction) => (<Arrow/>)}
-    hideExtraDays={true}
-    disableMonthChange={true}
-    firstDay={1}
-    hideDayNames={false}
-    showWeekNumbers={false}
-    onPressArrowLeft={substractMonth => substractMonth()}
-    onPressArrowRight={addMonth => addMonth()}
-    disableArrowLeft={true}
-    disableArrowRight={true}
-    disableAllTouchEventsForDisabledDays={true}
+ useEffect(()=>{
+  //  mount시에만 실행
+  const now = new Date();
+
+  function leftPad(value) {
+    if (value >= 10) {
+        return value;
+    }
+    return `0${value}`;
+}
+  function toStringByFormatting(source, delimiter = '-') {
+    const year = source.getFullYear();
+    const month = leftPad(source.getMonth() + 1);
+    const day = leftPad(source.getDate());
+    return [year, month, day].join(delimiter);
+}
+  const date = toStringByFormatting(now);
+  setSelectedDay(date);
+}, []);
+
+useEffect(()=> {
+  // mount시, selectDay 변경 시 실행
+  const dateArr = selectedDay.split('-');
+  let day;
+  if (dateArr[2].slice(0,1) == '0'){
+    day = dateArr[2].slice(1,2);
+  } else{
+    day = dateArr[2];
+  }
+  setSelectedDate(day); 
+}, [selectedDay]);
+
+  return(   
+    <CalendarContainer>
+       <DayCounterContainer>
+        <DayCounter/>
+      </DayCounterContainer>
+    <Calendar
+      monthFormat={'M월'}
+      onDayPress={(day) => {
+        setSelectedDay(day.year + "-" + day.dateString.split('-')[1] + "-" + day.dateString.split('-')[2]);
+      }}
+      markedDates={{
+        [selectedDay]: {
+            selected: true,
+            marked: true,
+            selectedColor: "rgb(76,174,249)"
+        }
+    }}
+      theme = {{
+        selectedDayBackgroundColor: '#00adf5',
+    selectedDayTextColor: '#ffffff',
+        textDayFontFamily: 'SpoqaHanSansNeo-Regular',
+        textMonthFontFamily: 'SpoqaHanSansNeo-Bold',
+        textDayHeaderFontFamily: 'SpoqaHanSansNeo-Bold',
+        textDayFontWeight: '400',
+        textMonthFontWeight: '600',
+        textDayHeaderFontWeight: '600',
+      }}
     />
+    <DiaryContainer>
+      <StyledDefaultText>{selectedDate}일</StyledDefaultText>
+      <StyledDefaultText style={{marginTop: 16,}}>햇병아리똥같은날</StyledDefaultText>
+    </DiaryContainer>
+    </CalendarContainer>
+   
   );
 }
 

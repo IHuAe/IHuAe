@@ -13,6 +13,7 @@ import styled, {css} from 'styled-components/native';
 import ButtonComponent from '~/components/ButtonComponent';
 import {DefaultText, DefaultMediumText, DefaultBoldText} from '~/components/DefaultText';
 import HeaderModal  from '~/components/HeaderModal';
+import DayCounter from '~/components/DayCounter';
 
 const img = {
   Img01: require("../assets/card/img01.png"),
@@ -34,10 +35,7 @@ const DayCounterContainer = styled.View`
   margin-top: 23px;
   margin-bottom: 27px;  
 `;
-const DayCounter = styled(DefaultBoldText)`
-  color: #FFBF6A;
-  font-size: 20px;
-`;
+
 const MainCard = styled.View`
   width: 100%;
   height: 238px;
@@ -108,7 +106,7 @@ const Main = () => {
   return(
     <MainContainer>
       <DayCounterContainer>
-      <DayCounter>D+1</DayCounter>
+      <DayCounter/>
       </DayCounterContainer>
       
       <MainCard>
