@@ -3,6 +3,7 @@ import { View, Text, ToastAndroid } from 'react-native';
 import styled  from 'styled-components/native';
 import {DefaultText} from '~/components/DefaultText';
 import DayCounter from '~/components/DayCounter';
+import useDidMountEffect from '~/components/useDidmountEffect';
 
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import {LocaleConfig} from 'react-native-calendars';
@@ -66,16 +67,14 @@ const FeelingCalendar = () => {
   setSelectedDay(date);
 }, []);
 
-useEffect(()=> {
-  // mount시, selectDay 변경 시 실행
-  const dateArr = selectedDay.split('-');
-  let day;
-  if (dateArr[2].slice(0,1) == '0'){
-    day = dateArr[2].slice(1,2);
-  } else{
-    day = dateArr[2];
-  }
-  setSelectedDate(day); 
+useDidMountEffect(() => {
+// mount시, selectDay 변경 시 실행
+const dateArr = selectedDay.split('-');
+let day = dateArr[2];
+if (day.slice(0,1) == '0'){
+  day = day.slice(1,2);
+}
+setSelectedDate(day); 
 }, [selectedDay]);
 
   return(   
