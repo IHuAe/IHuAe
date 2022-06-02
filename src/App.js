@@ -25,6 +25,7 @@ const icons = {
 import {HeaderOption, FolderMenu} from '~/components/Header';
 // page
 import Main from '~/pages/Main';
+import FeelingCalendar from '~/components/FeelingCalendar';
 
 // import styled-component
 import styled, {css} from 'styled-components/native';
@@ -33,6 +34,7 @@ import styled, {css} from 'styled-components/native';
 import { CurrentRenderContext, NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Header } from '@react-navigation/stack';
+
 
 const Tab = createBottomTabNavigator();
 
@@ -66,9 +68,8 @@ const App: () => Node = () => {
         }}/>
         <Tab.Screen
             name="Main2"
-            component={Main}
+            component={FeelingCalendar}
             options={{
-                headerTitle: '방울이',
                 tabBarIcon: ({ focused }) => (
                     <Image
                         style={{
