@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { View, Text, ToastAndroid } from 'react-native';
+import { View, Text, ToastAndroid, Image } from 'react-native';
 import styled  from 'styled-components/native';
 import {DefaultText} from '~/components/DefaultText';
 import DayCounter from '~/components/DayCounter';
@@ -7,6 +7,11 @@ import useDidMountEffect from '~/components/useDidmountEffect';
 
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import {LocaleConfig} from 'react-native-calendars';
+
+const icon = {
+  Left : require("../assets/icon/ic_left_arr.png"),
+  Right : require("../assets/icon/ic_right_arr.png"),
+}
 
 
 LocaleConfig.locales['fr'] = {
@@ -42,6 +47,12 @@ const StyledDefaultText = styled(DefaultText)`
   font-size: 13px;
 
 `;
+
+const DirectionArrowStyle = {
+  width: 11,
+  height:16,
+  resizeMode: "contain",
+}
 
 const FeelingCalendar = () => {
  const [selectedDay, setSelectedDay] = useState('');
@@ -94,6 +105,7 @@ setSelectedDate(day);
             selectedColor: "rgb(76,174,249)"
         }
     }}
+    renderArrow={direction => <Image style={DirectionArrowStyle} source={direction === 'left' ? icon.Left : icon.Right} />}
       theme = {{
         selectedDayBackgroundColor: '#00adf5',
     selectedDayTextColor: '#ffffff',
@@ -103,6 +115,17 @@ setSelectedDate(day);
         textDayFontWeight: '400',
         textMonthFontWeight: '600',
         textDayHeaderFontWeight: '600',
+        textSectionTitleColor: '#000',
+        textDisabledColor: 'transparent',
+        dayTextColor: '#000',
+        'stylesheet.calendar.header': {
+          dayTextAtIndex0: {
+            color: 'red'
+          },
+          dayTextAtIndex6: {
+            color: 'blue'
+          }
+        }
       }}
     />
     <DiaryContainer>
