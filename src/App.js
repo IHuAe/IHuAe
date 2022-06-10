@@ -25,7 +25,8 @@ const icons = {
 import {HeaderOption, FolderMenu} from '~/components/Header';
 // page
 import Main from '~/pages/Main';
-import FeelingCalendar from '~/components/FeelingCalendar';
+import FeelingCalendar from '~/pages/FeelingCalendar';
+import EmotionSuppressor from '~/pages/EmotionSuppressor';
 
 // import styled-component
 import styled, {css} from 'styled-components/native';
@@ -48,6 +49,7 @@ const App: () => Node = () => {
         barStyle="dark-content"/>       
     <Tab.Navigator
       screenOptions={HeaderOption}>
+        {/* Main */}
         <Tab.Screen
             name="Main"
             component={Main}
@@ -66,6 +68,7 @@ const App: () => Node = () => {
                 ),
                 tabBarLabel:() => {return null},
         }}/>
+        {/* Calendar */}
         <Tab.Screen
             name="Main2"
             component={FeelingCalendar}
@@ -84,6 +87,7 @@ const App: () => Node = () => {
                 tabBarLabel:() => {return null},
 
         }}/>
+        {/* Diary */}
         <Tab.Screen
             name="Main3"
             component={Main}
@@ -102,9 +106,10 @@ const App: () => Node = () => {
                   ),
                   tabBarLabel:() => {return null},
         }}/>
+        {/* Emotion Suppressor */}
         <Tab.Screen
             name="Main4"
-            component={Main}            
+            component={EmotionSuppressor}            
             options={{
                 tabBarIcon: ({ focused }) => (
                     <Image

@@ -94,6 +94,7 @@ setSelectedDate(day);
         <DayCounter/>
       </DayCounterContainer>
     <Calendar
+      style={{marginTop: 18}}
       monthFormat={'M월'}
       onDayPress={(day) => {
         setSelectedDay(day.year + "-" + day.dateString.split('-')[1] + "-" + day.dateString.split('-')[2]);
@@ -108,25 +109,24 @@ setSelectedDate(day);
     renderArrow={direction => <Image style={DirectionArrowStyle} source={direction === 'left' ? icon.Left : icon.Right} />}
       theme = {{
         selectedDayBackgroundColor: '#00adf5',
-    selectedDayTextColor: '#ffffff',
+        selectedDayTextColor: '#ffffff',
         textDayFontFamily: 'SpoqaHanSansNeo-Regular',
         textMonthFontFamily: 'SpoqaHanSansNeo-Bold',
         textDayHeaderFontFamily: 'SpoqaHanSansNeo-Bold',
         textDayFontWeight: '400',
         textMonthFontWeight: '600',
         textDayHeaderFontWeight: '600',
+        textDayFontSize: 10,
         textSectionTitleColor: '#000',
-        textDisabledColor: 'transparent',
         dayTextColor: '#000',
-        'stylesheet.calendar.header': {
-          dayTextAtIndex0: {
-            color: 'red'
-          },
-          dayTextAtIndex6: {
-            color: 'blue'
-          }
-        }
+        monthTextColor: '#545454',
+        textDisabledColor: 'transparent',
+        textMonthFontSize: 20,
+        calendarBackground: '#f3f3f3',
+        backgroundColor: '#f3f3f3',
+        selectedDayBackgroundColor: '#A8D5EF',
       }}
+      enableSwipeMonths={true}
     />
     <DiaryContainer>
       <StyledDefaultText>{selectedDate}일</StyledDefaultText>

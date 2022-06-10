@@ -12,7 +12,7 @@ import styled, {css} from 'styled-components/native';
 // import component
 import ButtonComponent from '~/components/ButtonComponent';
 import {DefaultText, DefaultMediumText, DefaultBoldText} from '~/components/DefaultText';
-import HeaderModal  from '~/components/HeaderModal';
+import MainModal  from '~/components/MainModal';
 import DayCounter from '~/components/DayCounter';
 
 const img = {
@@ -98,10 +98,6 @@ const TodayQuestionTitle = styled(DefaultText)`
 const Main = () => {
   // Modal state
   const [modalVisible, setModalVisible] = useState(false);
-  // const closeModal = () => {
-  //   this.setState({})
-  // }
-  const test = modalVisible ? 'modalvisible' : 'modalVisiblefalse';
          
   return(
     <MainContainer>
@@ -132,7 +128,7 @@ const Main = () => {
          오늘의 문답 모음 
         </TodayQuestionTitle>        
       </TodayQuestionContainer>
-      <HeaderModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
+      <MainModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
     </MainContainer>
   );
 }
