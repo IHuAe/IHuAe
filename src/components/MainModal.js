@@ -86,7 +86,7 @@ const icon = {
   Close : require("../assets/icon/ic_cancel.png"),
  }
 
-const HeaderModal = ({modalVisible, setModalVisible}) => {  
+const MainModal = ({modalVisible, setModalVisible}) => {  
   const [feelIcon , setfeelIcon] = useState('');
   const [todayDiary , setTodayDiary] = useState('');
   const [prevFeelIcon, setPrevFeelIcon] = useState('');
@@ -153,7 +153,7 @@ const HeaderModal = ({modalVisible, setModalVisible}) => {
             </TodayFeelArea>
             <TextInputArea>
                 <StyledTextInputLabel>한마디로 표현하자면?</StyledTextInputLabel>
-                <StyledTextInput value={todayDiary} onChangeText={(text)=>{setTodayDiary(text); console.log(text)}} placeholderTextColor="#CBCBCB" placeholder="10자 이내로 작성해주세요.(생략가능)" maxLength={10} />
+                <StyledTextInput value={todayDiary} onChangeText={(text)=>{setTodayDiary(text);}} placeholderTextColor="#CBCBCB" placeholder="10자 이내로 작성해주세요.(생략가능)" maxLength={10} />
             </TextInputArea>
         </ModalContents>
           <RegisterBtnArea>
@@ -172,4 +172,4 @@ const HeaderModal = ({modalVisible, setModalVisible}) => {
   )
 }
 
-export default HeaderModal;
+export default MainModal;

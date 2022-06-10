@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { View, Text, ToastAndroid } from 'react-native';
+import { View, Text, ToastAndroid, Image } from 'react-native';
 import styled  from 'styled-components/native';
 import {DefaultText} from '~/components/DefaultText';
 import DayCounter from '~/components/DayCounter';
@@ -7,6 +7,11 @@ import useDidMountEffect from '~/components/useDidmountEffect';
 
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import {LocaleConfig} from 'react-native-calendars';
+
+const icon = {
+  Left : require("../assets/icon/ic_left_arr.png"),
+  Right : require("../assets/icon/ic_right_arr.png"),
+}
 
 
 LocaleConfig.locales['fr'] = {
@@ -42,6 +47,12 @@ const StyledDefaultText = styled(DefaultText)`
   font-size: 13px;
 
 `;
+
+const DirectionArrowStyle = {
+  width: 11,
+  height:16,
+  resizeMode: "contain",
+}
 
 const FeelingCalendar = () => {
  const [selectedDay, setSelectedDay] = useState('');
@@ -83,6 +94,7 @@ setSelectedDate(day);
         <DayCounter/>
       </DayCounterContainer>
     <Calendar
+      style={{marginTop: 18}}
       monthFormat={'M월'}
       onDayPress={(day) => {
         setSelectedDay(day.year + "-" + day.dateString.split('-')[1] + "-" + day.dateString.split('-')[2]);
@@ -94,16 +106,27 @@ setSelectedDate(day);
             selectedColor: "rgb(76,174,249)"
         }
     }}
+    renderArrow={direction => <Image style={DirectionArrowStyle} source={direction === 'left' ? icon.Left : icon.Right} />}
       theme = {{
         selectedDayBackgroundColor: '#00adf5',
-    selectedDayTextColor: '#ffffff',
+        selectedDayTextColor: '#ffffff',
         textDayFontFamily: 'SpoqaHanSansNeo-Regular',
         textMonthFontFamily: 'SpoqaHanSansNeo-Bold',
         textDayHeaderFontFamily: 'SpoqaHanSansNeo-Bold',
         textDayFontWeight: '400',
         textMonthFontWeight: '600',
         textDayHeaderFontWeight: '600',
+        textDayFontSize: 10,
+        textSectionTitleColor: '#000',
+        dayTextColor: '#000',
+        monthTextColor: '#545454',
+        textDisabledColor: 'transparent',
+        textMonthFontSize: 20,
+        calendarBackground: '#f3f3f3',
+        backgroundColor: '#f3f3f3',
+        selectedDayBackgroundColor: '#A8D5EF',
       }}
+      enableSwipeMonths={true}
     />
     <DiaryContainer>
       <StyledDefaultText>{selectedDate}일</StyledDefaultText>
