@@ -1,7 +1,10 @@
-import React, {useState, useEffect} from 'react';
-import { View, Text, TextInput, TouchableOpacity, Image } from 'react-native';
+import React, {useState, useEffect, useRef, useCallback} from 'react';
+import { View, Text, TextInput, TouchableOpacity, Image, FlatList, ScrollView, Keyboard } from 'react-native';
 import styled  from 'styled-components/native';
 import {DefaultText} from '~/components/DefaultText';
+import ChatBubble from '~/components/ChatBubble';
+import useDidMountEffect from '~/components/useDidmountEffect';
+import { Children } from 'react/cjs/react.production.min';
 
 const icon = {
   Send : require("../assets/icon/ic_send.png"),
@@ -12,7 +15,6 @@ const EmotionSuppressorContainer = styled.View`
  height: 100%;
  padding-bottom: 80px;
  justify-content: space-between;
- border: 1px solid red;
 `;
 
 const DescriptionArea = styled.View`
@@ -25,11 +27,16 @@ const DescriptionText = styled(DefaultText)`
  color: #9E9E9E;
 `;
 
-const ChatArea = styled.View`
- border: 1px solid red;
+const ChatArea = styled.FlatList`
  flex-basis: 100%;
  flex-shrink: 1;
- padding: 17px 0;
+ padding: 0 20px 17px 20px;
+ flex-direction: column;
+ 
+`;
+const ChatAreaBottomDummy = styled.View`
+ width: 100%;
+ height: 17px;
 `;
 
 const TextInputArea = styled.View`
@@ -62,24 +69,68 @@ const SendBtnIcon = styled.Image`
  height: 27px;
 `;
 
+
+
+const DescriptionComponent = () => {
+  return(
+    <DescriptionArea>
+      <DescriptionText>
+        이 곳은 충동적인 감정을 억제하기 위한 곳입니다. {'\n'}
+        상대방에게 하고 싶은 말이 있다면, 이 곳에 써주세요. {'\n'}
+        하루가 지나면, 당신의 말들은 사라집니다.
+      </DescriptionText>
+  </DescriptionArea>
+  )
+}
+
 const EmotionSuppressor = () => {
   // state
-  const [chatText, setChatText] = useState('');
+  const [chatText, setChatText] = useState([]);
+  const [chatDataList, setChatDataList] = useState([]);
   const [chatInputHeight, setChatInputHeight] = useState('');
+  const [hasNewChat, setHasNewChat] = useState(false);
+
+  const scrollRef = useRef(); 
+  // chatDataList 갱신 시마다 스크롤 하단으로 내리기
+  useDidMountEffect(()=>{
+    if (hasNewChat){
+      scrollRef.current.scrollToEnd()  
+      setHasNewChat(false);
+    }     
+  },[hasNewChat])
+  
+ const handleUpdateChat = (msg) => {    
+  // 카톡 보내기
+  const msgData = {
+    id : 'msgId' + (chatDataList.length + 1),
+    message : msg,
+    sendTime : new Date(),    
+  }
+  const newDataList = [...chatDataList, msgData];
+  setChatDataList(newDataList);
+  // 입력창 초기화 및 키보드 닫기(없앨지 말지 회의 필요함)
+  setChatText('');
+  Keyboard.dismiss();
+ };  
 
   return (
     <EmotionSuppressorContainer>
-      <DescriptionArea>
-        <DescriptionText>
-          이 곳은 충동적인 감정을 억제하기 위한 곳입니다. {'\n'}
-          상대방에게 하고 싶은 말이 있다면, 이 곳에 써주세요. {'\n'}
-          하루가 지나면, 당신의 말들은 사라집니다.
-        </DescriptionText>
-      </DescriptionArea>
-      <ChatArea>
-        <Text>채팅창</Text>
-      </ChatArea>
-      <TextInputArea>
+        <ChatArea
+          data={chatDataList}
+          renderItem={({item}) => {
+            return( <ChatBubble msg={item.message}/>)           
+          }}
+          windowSize={2}
+          ListHeaderComponent = {DescriptionComponent}
+          ListFooterComponent = {ChatAreaBottomDummy}
+          ref={scrollRef}
+          onContentSizeChange={() => scrollRef.current.scrollToEnd() }
+          onLayout={() => scrollRef.current.scrollToEnd() }
+        >
+          
+        </ChatArea>     
+      <TextInputArea style={{elevation: 3,}}>
+        {/* 채팅 입력창 */}
           <StyledTextInput  
           multiline= {true} 
           // numberOfLines={3}
@@ -87,11 +138,17 @@ const EmotionSuppressor = () => {
             setChatInputHeight(event.nativeEvent.contentSize.height);
           }}
           onChange={(event) => {
-            const chatText = event.nativeEvent.text;                      
-            setChatText(chatText);
+            const chat = event.nativeEvent.text;                      
+            setChatText(chat);
           }}
+          value={chatText}
           />
-          <SendBtn>
+          <SendBtn onPress={()=>{
+            if (chatText != ''){
+              handleUpdateChat(chatText);
+              setHasNewChat(true);
+            } 
+          }}>
             <SendBtnIcon source={icon.Send}/>
           </SendBtn>
       </TextInputArea>
