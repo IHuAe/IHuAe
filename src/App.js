@@ -11,22 +11,13 @@ import {
   View,
   Image
 } from 'react-native';
-
-
-const icons = {
-  Home: require("./assets/icon/tab_off_ic_home.png"),
-  Cal: require("./assets/icon/tab_off_ic_date.png"),
-  Edit: require("./assets/icon/tab_off_ic_edit.png"),
-  Message: require("./assets/icon/tab_off_ic_message.png"),
-};
-
+// asset
+import {Icons} from '~/assets';
 
 // header
-import {HeaderOption, FolderMenu} from '~/components/Header';
+import {HeaderOption, FolderMenu} from '~/components';
 // page
-import Main from '~/pages/Main';
-import FeelingCalendar from '~/pages/FeelingCalendar';
-import EmotionSuppressor from '~/pages/EmotionSuppressor';
+import { Main, FeelingCalendar, EmotionSuppressor } from './pages';
 
 // import styled-component
 import styled, {css} from 'styled-components/native';
@@ -35,6 +26,7 @@ import styled, {css} from 'styled-components/native';
 import { CurrentRenderContext, NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Header } from '@react-navigation/stack';
+import { forModalPresentationIOS } from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/CardStyleInterpolators';
 
 
 const Tab = createBottomTabNavigator();
@@ -63,7 +55,7 @@ const App: () => Node = () => {
                               height: 31,
                               width: 31
                         }}
-                        source={icons.Home}
+                        source={Icons.Home}
                     />
                 ),
                 tabBarLabel:() => {return null},
@@ -81,7 +73,7 @@ const App: () => Node = () => {
                               height: 31,
                               width: 31
                         }}
-                        source={icons.Cal}
+                        source={Icons.Cal}
                     />
                 ),
                 tabBarLabel:() => {return null},
@@ -101,7 +93,7 @@ const App: () => Node = () => {
                                   height: 31,
                                   width: 31
                             }}
-                            source={icons.Edit}
+                            source={Icons.Edit}
                         />
                   ),
                   tabBarLabel:() => {return null},
@@ -119,7 +111,7 @@ const App: () => Node = () => {
                               height: 31,
                               width: 31
                         }}
-                        source={icons.Message}
+                        source={Icons.Message}
                     />
                 ),
                 tabBarLabel:() => {return null},

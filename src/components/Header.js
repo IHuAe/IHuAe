@@ -5,8 +5,8 @@ import styled from 'styled-components/native';
 //import boxShadow for android
 import {BoxShadow} from 'react-native-shadow'
 
-// img
-const folderIconImg = require("../assets/icon/ic_folder.png");
+// asset
+import { Icons } from '~/assets';
 
 const StyledFolderMenu = styled.Image`
 width: 27px;
@@ -14,7 +14,7 @@ height: 27px;
 `;
 const FolderMenu = () => {
   return(
-    <StyledFolderMenu source={folderIconImg}/>
+    <StyledFolderMenu source={Icons.Folder}/>
   );
 }
 

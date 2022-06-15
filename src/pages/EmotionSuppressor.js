@@ -1,14 +1,13 @@
 import React, {useState, useEffect, useRef, useCallback} from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, FlatList, ScrollView, Keyboard } from 'react-native';
 import styled  from 'styled-components/native';
-import {DefaultText} from '~/components/DefaultText';
-import ChatBubble from '~/components/ChatBubble';
-import useDidMountEffect from '~/components/useDidmountEffect';
+// component
+import {DefaultText, ChatBubble} from '~/components';
+// util
+import {useDidMountEffect} from '~/utils';
 import { Children } from 'react/cjs/react.production.min';
-
-const icon = {
-  Send : require("../assets/icon/ic_send.png"),
- }
+// asset
+import { Icons } from '~/assets';
 
 const EmotionSuppressorContainer = styled.View`
  background-color: #fff;
@@ -149,7 +148,7 @@ const EmotionSuppressor = () => {
               setHasNewChat(true);
             } 
           }}>
-            <SendBtnIcon source={icon.Send}/>
+            <SendBtnIcon source={Icons.Send}/>
           </SendBtn>
       </TextInputArea>
     </EmotionSuppressorContainer>    

@@ -10,18 +10,9 @@ import {
 // import styled-component
 import styled, {css} from 'styled-components/native';
 // import component
-import ButtonComponent from '~/components/ButtonComponent';
-import {DefaultText, DefaultMediumText, DefaultBoldText} from '~/components/DefaultText';
-import MainModal  from '~/components/MainModal';
-import DayCounter from '~/components/DayCounter';
-
-const img = {
-  Img01: require("../assets/card/img01.png"),
-};
-const icon = {
- Smile : require("../assets/icon/ic_smile.png"),
-}
-
+import {DefaultText, DefaultMediumText, DefaultBoldText, MainModal, DayCounter, ButtonComponent} from '~/components';
+// asset
+import {Icons, CardImg} from '~/assets';
 // style
 const MainContainer = styled.View`
   background: #ffffff;
@@ -106,7 +97,7 @@ const Main = () => {
       </DayCounterContainer>
       
       <MainCard>
-      <MainCardBg source={img.Img01}>
+      <MainCardBg source={CardImg.Img01}>
           <MainCardText>
             오늘은 좋아하는 걸 {'\n'}
             적어보는 건 어때요?
@@ -119,7 +110,7 @@ const Main = () => {
             <TodayFeelTitle>
                 오늘의 기분       
             </TodayFeelTitle>  
-            <TodayFeelIcon source={icon.Smile} />
+            <TodayFeelIcon source={Icons.Smile} />
         </TodayFeelLeftArea>      
         <ButtonComponent shadow={3} onPress={()=> {setModalVisible(true)}} title="기록하기" round='100px' textColor='#222'/>     
       </TodayFeelContainer>
