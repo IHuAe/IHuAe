@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef, useCallback} from 'react';
+import React, {useState, useRef} from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, FlatList, ScrollView, Keyboard } from 'react-native';
 import styled  from 'styled-components/native';
 // component
@@ -84,10 +84,11 @@ const DescriptionComponent = () => {
 
 const EmotionSuppressor = () => {
   // state
-  const [chatText, setChatText] = useState([]);
+  const [chatText, setChatText] = useState('');
   const [chatDataList, setChatDataList] = useState([]);
   const [chatInputHeight, setChatInputHeight] = useState('');
   const [hasNewChat, setHasNewChat] = useState(false);
+
 
   const scrollRef = useRef(); 
   // chatDataList 갱신 시마다 스크롤 하단으로 내리기
@@ -132,7 +133,6 @@ const EmotionSuppressor = () => {
         {/* 채팅 입력창 */}
           <StyledTextInput  
           multiline= {true} 
-          // numberOfLines={3}
           onContentSizeChange={(event) => {
             setChatInputHeight(event.nativeEvent.contentSize.height);
           }}
@@ -140,7 +140,7 @@ const EmotionSuppressor = () => {
             const chat = event.nativeEvent.text;                      
             setChatText(chat);
           }}
-          value={chatText}
+          value={chatText ? chatText : ''}
           />
           <SendBtn onPress={()=>{
             if (chatText != ''){
