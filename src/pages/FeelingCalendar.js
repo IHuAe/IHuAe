@@ -1,17 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import { View, Text, ToastAndroid, Image } from 'react-native';
 import styled  from 'styled-components/native';
-import {DefaultText} from '~/components/DefaultText';
-import DayCounter from '~/components/DayCounter';
-import useDidMountEffect from '~/components/useDidmountEffect';
-
+// components
+import {DefaultText, DayCounter} from '~/components/index';
+// util
+import {useDidMountEffect} from '~/utils/index';
+// lib
 import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import {LocaleConfig} from 'react-native-calendars';
-
-const icon = {
-  Left : require("../assets/icon/ic_left_arr.png"),
-  Right : require("../assets/icon/ic_right_arr.png"),
-}
+// asset
+import {Icons} from '~/assets';
 
 
 LocaleConfig.locales['fr'] = {
@@ -106,7 +104,7 @@ setSelectedDate(day);
             selectedColor: "rgb(76,174,249)"
         }
     }}
-    renderArrow={direction => <Image style={DirectionArrowStyle} source={direction === 'left' ? icon.Left : icon.Right} />}
+    renderArrow={direction => <Image style={DirectionArrowStyle} source={direction === 'left' ? Icons.Left : Icons.Right} />}
       theme = {{
         selectedDayBackgroundColor: '#00adf5',
         selectedDayTextColor: '#ffffff',

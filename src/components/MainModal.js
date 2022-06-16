@@ -8,7 +8,8 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import styled from "styled-components/native";
 // import component
 import {DefaultText, DefaultMediumText, DefaultBoldText} from '~/components/DefaultText';
-import ButtonComponent from '~/components/ButtonComponent';
+import {ButtonComponent} from '~/components';
+import {Icons} from '~/assets';
 
 const ModalContainer = styled.View`
   width: 88.8%;
@@ -81,11 +82,6 @@ const RegisterBtnArea = styled.View`
 align-items: center;
 `;
 
-
-const icon = {
-  Close : require("../assets/icon/ic_cancel.png"),
- }
-
 const MainModal = ({modalVisible, setModalVisible}) => {  
   const [feelIcon , setfeelIcon] = useState('');
   const [todayDiary , setTodayDiary] = useState('');
@@ -133,7 +129,7 @@ const MainModal = ({modalVisible, setModalVisible}) => {
         <ModalContainer style={{elevation: 5,}}>
           <CloseBtnContainer>
             <TouchableWithoutFeedback onPress={closeModal}> 
-            <CloseBtn source={icon.Close} />
+            <CloseBtn source={Icons.Close} />
             </TouchableWithoutFeedback>           
           </CloseBtnContainer>
         <ModalContents>
