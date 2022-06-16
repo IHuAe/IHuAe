@@ -9,6 +9,7 @@ const Icons = {
   Right : require("./icon/ic_right_arr.png"),
   Smile : require("./icon/ic_smile.png"),
   Folder : require("./icon/ic_folder.png"),
+  Union : require("./icon/ic_union.png"),
 };
 
 const CardImg = {

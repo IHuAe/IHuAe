@@ -2,4 +2,5 @@
 // 사용 예시: import { Main, Login, Register } from "./pages";
 export { default as Main } from '~/pages/Main';
 export { default as FeelingCalendar } from '~/pages/FeelingCalendar';
+export { default as Diary } from '~/pages/Diary';
 export { default as EmotionSuppressor } from '~/pages/EmotionSuppressor';

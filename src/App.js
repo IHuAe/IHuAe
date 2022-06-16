@@ -17,7 +17,7 @@ import {Icons} from '~/assets';
 // header
 import {HeaderOption, FolderMenu} from '~/components';
 // page
-import { Main, FeelingCalendar, EmotionSuppressor } from './pages';
+import { Main, FeelingCalendar, EmotionSuppressor, Diary } from './pages';
 
 // import styled-component
 import styled, {css} from 'styled-components/native';
@@ -62,7 +62,7 @@ const App: () => Node = () => {
         }}/>
         {/* Calendar */}
         <Tab.Screen
-            name="Main2"
+            name="Calendar"
             component={FeelingCalendar}
             options={{
                 tabBarIcon: ({ focused }) => (
@@ -81,10 +81,10 @@ const App: () => Node = () => {
         }}/>
         {/* Diary */}
         <Tab.Screen
-            name="Main3"
-            component={Main}
+            name="Diary"
+            component={Diary}
             options={{
-                  headerTitle: '푸름이',
+                  headerTitle: '이후애',
                   tabBarIcon: ({ focused }) => (
                         <Image
                             style={{
@@ -100,7 +100,7 @@ const App: () => Node = () => {
         }}/>
         {/* Emotion Suppressor */}
         <Tab.Screen
-            name="Main4"
+            name="Emotion Suppressor"
             component={EmotionSuppressor}            
             options={{
                 tabBarIcon: ({ focused }) => (
