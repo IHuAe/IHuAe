@@ -133,9 +133,9 @@ const EmotionSuppressor = () => {
         {/* 채팅 입력창 */}
           <StyledTextInput  
           multiline= {true} 
-          onContentSizeChange={(event) => {
-            setChatInputHeight(event.nativeEvent.contentSize.height);
-          }}
+          // onContentSizeChange={(event) => {
+          //   setChatInputHeight(event.nativeEvent.contentSize.height);
+          // }}
           onChange={(event) => {
             const chat = event.nativeEvent.text;                      
             setChatText(chat);

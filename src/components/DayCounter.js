@@ -1,18 +1,19 @@
-import React, {useState} from 'react';
+import React from 'react';
 // import tag
-import {
-  Text,
-} from 'react-native';
+import {Text} from 'react-native';
+import {useRecoilState, useRecoilValue} from 'recoil';
+import {dayState} from '~/atoms/atoms';
 
 const DayCounterStyle = {
   color: '#FFBF6A',
-    fontSize: 20,
-    fontFamily: 'SpoqaHanSansNeo-Bold',
-    fontWeight: '600',
-}
+  fontSize: 20,
+  fontFamily: 'SpoqaHanSansNeo-Bold',
+  fontWeight: '600',
+};
 
 const DayCounter = () => {
-  return  <Text style={DayCounterStyle}>D+1</Text>;
-}
-  
+  const dayCount = useRecoilValue(dayState);
+  return <Text style={DayCounterStyle}>D+{dayCount.dayCount}</Text>;
+};
+
 export default DayCounter;
