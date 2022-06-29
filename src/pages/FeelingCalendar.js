@@ -2,57 +2,57 @@ import React, {useState, useEffect} from 'react';
 import {View, Text, ToastAndroid, Image} from 'react-native';
 import styled from 'styled-components/native';
 // components
-import {DefaultText, DayCounter} from '~/components/index';
+import {DefaultText, DayCounter, Calendar} from '~/components/index';
 // util
 import {useDidMountEffect} from '~/utils/index';
 // lib
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
+// import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import {LocaleConfig} from 'react-native-calendars';
 // asset
 import {Icons} from '~/assets';
 
-LocaleConfig.locales['fr'] = {
-  monthNames: [
-    'Janvier',
-    'Février',
-    'Mars',
-    'Avril',
-    'Mai',
-    'Juin',
-    'Juillet',
-    'Août',
-    'Septembre',
-    'Octobre',
-    'Novembre',
-    'Décembre',
-  ],
-  monthNamesShort: [
-    'Janv.',
-    'Févr.',
-    'Mars',
-    'Avril',
-    'Mai',
-    'Juin',
-    'Juil.',
-    'Août',
-    'Sept.',
-    'Oct.',
-    'Nov.',
-    'Déc.',
-  ],
-  dayNames: [
-    '일요일',
-    '월요일',
-    '화요일',
-    '수요일',
-    '목요일',
-    '금요일',
-    '토요일',
-  ],
-  dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
-  today: "Aujourd'hui",
-};
-LocaleConfig.defaultLocale = 'fr';
+// LocaleConfig.locales['fr'] = {
+//   monthNames: [
+//     'Janvier',
+//     'Février',
+//     'Mars',
+//     'Avril',
+//     'Mai',
+//     'Juin',
+//     'Juillet',
+//     'Août',
+//     'Septembre',
+//     'Octobre',
+//     'Novembre',
+//     'Décembre',
+//   ],
+//   monthNamesShort: [
+//     'Janv.',
+//     'Févr.',
+//     'Mars',
+//     'Avril',
+//     'Mai',
+//     'Juin',
+//     'Juil.',
+//     'Août',
+//     'Sept.',
+//     'Oct.',
+//     'Nov.',
+//     'Déc.',
+//   ],
+//   dayNames: [
+//     '일요일',
+//     '월요일',
+//     '화요일',
+//     '수요일',
+//     '목요일',
+//     '금요일',
+//     '토요일',
+//   ],
+//   dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
+//   today: "Aujourd'hui",
+// };
+// LocaleConfig.defaultLocale = 'fr';
 
 const CalendarContainer = styled.View`
   background: #ffffff;
@@ -121,7 +121,8 @@ const FeelingCalendar = () => {
       <DayCounterContainer>
         <DayCounter />
       </DayCounterContainer>
-      <Calendar
+      <Calendar/>
+      {/* <Calendar
         style={{marginTop: 18}}
         monthFormat={'M월'}
         onDayPress={day => {
@@ -166,7 +167,7 @@ const FeelingCalendar = () => {
           selectedDayBackgroundColor: '#A8D5EF',
         }}
         enableSwipeMonths={true}
-      />
+      /> */}
       <DiaryContainer>
         <StyledDefaultText>{selectedDate}일</StyledDefaultText>
         <StyledDefaultText style={{marginTop: 16}}>
