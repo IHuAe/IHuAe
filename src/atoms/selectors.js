@@ -9,11 +9,11 @@ const calculatedWeek = selector({
 
     if (day.dayCount <= 7) {
       return 1;
-    } else if (day > 7 && day <= 14) {
+    } else if (day.dayCount > 7 && day.dayCount <= 14) {
       return 2;
-    } else if (day > 14 && day <= 21) {
+    } else if (day.dayCount > 14 && day.dayCount <= 21) {
       return 3;
-    } else if (day > 21) {
+    } else if (day.dayCount > 21) {
       return 4;
     } else {
       return null;

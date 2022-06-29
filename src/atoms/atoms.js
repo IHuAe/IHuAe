@@ -37,8 +37,8 @@ const dayState = atom({
       AsyncStorage.setItem(
         'dayState',
         JSON.stringify({
-          dayCount: '1',
-          initDay: '2',
+          dayCount: 1,
+          initDay: 2,
         }),
       );
       AsyncStorage.getItem('dayState', (err, result) => {
