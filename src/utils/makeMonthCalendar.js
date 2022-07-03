@@ -2,7 +2,7 @@
   import { leftPad } from '~/utils';
 
 // 테스트 일기 data
-const diaryData = [{date: '20220630', diary : true}];
+const diaryData = [{date: '20220630', diary : true}, {date: '20220712', diary : true}];
 const diaryDateData = diaryData.map((el)=>el.date).sort();
 // // 테스트 일기 data
 
@@ -21,7 +21,7 @@ const makeMonthCalendar = (year,month) => {
         weekArr[i] = {
           date : lastMonthLastDate,
           fullDate : fullDate,
-          diary: diaryDateData.filter(el => el == fullDate.length >= 1),
+          diary: diaryDateData.filter(el => el == fullDate).length >= 1,
           currentMonth : false,
         }
         lastMonthLastDate--;
