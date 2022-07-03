@@ -1,160 +1,262 @@
 import React, {useState} from 'react';
-import {View, Text, ToastAndroid, Image, TouchableOpacity} from 'react-native';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import { exp } from 'react-native/Libraries/Animated/Easing';
-import styled from 'styled-components/native';
+import {
+  View,
+  Text,
+  ToastAndroid,
+  Image,
+  TouchableOpacity,
+  ImageBackground,
+} from 'react-native';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import styled, {css} from 'styled-components/native';
+// utils
+import {makeMonthCalendar, leftPad} from '~/utils';
+// asset
+import {Icons} from '~/assets';
 // components
-import {DefaultText, DayCounter} from '~/components/index';
+import {
+  DefaultText,
+  DefaultBoldText,
+  DefaultMediumText,
+  DayCounter,
+} from '~/components/DefaultText';
+import {Fragment} from 'react/cjs/react.production.min';
+import Icon from 'react-native-ionicons';
+// import {DefaultText, DefaultBoldText, DefaultMediumText} from '~/components/DefaultText';
 
+const CalendarWrap = styled.View`
+  background: #f3f3f3;
+`;
+const Header = styled.View`
+  width: 100%;
+  height: 45px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 32px;
+  background-color: #bababa;
+`;
+const HeaderTextContainer = styled.View`
+  flex-direction: row;
+`;
+const HeaderText = styled(DefaultBoldText)`
+  color: #545454;
+  font-size: 20px;
 
-const leftPad = (value) => {
-  if (value >= 10) {return value};
-  return `0${value}`;
-}
+  ${props =>
+    props.display == 'none' &&
+    css`
+      width: 0;
+      height: 0;
+    `};
+`;
 
-// 테스트 일기 data
-const diaryData = [{date: '20220630', diary : true}];
-const diaryDateData = diaryData.map((el)=>el.date).sort();
-// // 테스트 일기 data
+const MonthChangeBtn = styled.ImageBackground`
+  width: 12px;
+  height: 16px;
+`;
+
+const Contents = styled.View`
+  padding: 0 20px;
+`;
+const WeekContainer = styled.View`
+  margin-top: 30px;
+  flex-direction: row;
+`;
+const WeekText = styled(DefaultBoldText)`
+  width: 14.285%;
+  font-size: 10px;
+  color: #000;
+  flex-grow: 1;
+  flex-shrink: 0;
+  text-align: center;
+`;
+
+const DayRow = styled.View`
+  flex-direction: row;
+`;
+const DateItem = styled.TouchableOpacity`
+  width: 14.285%;
+  flex-grow: 1;
+  flex-shrink: 0;
+  position: relative;
+  padding: 10px 0;
+`;
+const DateItemText = styled(DefaultText)`
+  font-size: 10px;
+  text-align: center;
+
+  color: ${props => (props.currentMonth ? '#000' : '#aaa')};
+  ${props =>
+    props.today &&
+    props.currentMonth &&
+    // 오늘 날짜
+    css`
+      color: #fff;
+      font-weight: bold;
+    `}
+  ${
+    // 선택된 날짜
+    props =>
+      props.selected &&
+      css`
+        color: orange;
+      `
+  }
+ ${
+    // 일기 기록이 있는 날짜
+    props =>
+      props.diary &&
+      css`
+        color: purple;
+      `
+  }
+`;
+const DateContainer = styled.View`
+  margin-top: 10px;
+  margin-bottom: 20px;
+`;
+const TodayIcon = styled.ImageBackground`
+  width: 20px;
+  height: 24px;
+  margin-top: -2px;
+  position: absolute;
+  top: 7px;
+  left: 50%;
+  margin-left: -10px;
+`;
 
 const Calendar = () => {
   const now = new Date();
   const today = {
-    year : now.getFullYear(),
-    month : now.getMonth(),
-    date : now.getDate(),
-  }
-  const todayFullDate = `${today.year}${leftPad(today.month)}${leftPad(today.date)}`;
-  const week = ['일','월','화','수','목','금','토']
-  // 캘린더 생성 함수
-  const makeMonthCalendar = (year,month) => {
-    const lastDate = new Date(year,month+1,0); // 이번 달 마지막 날짜
-    const firstDay = new Date(year, month, 1).getDay(); // 이번 달 첫번째 날짜의 요일
-    const calendarArr = [];
-    let weekArr = Array(7).fill("");
-    let dayIndex = firstDay;
-    // 이전 달 날짜 출력
-    if (dayIndex != 0) {
-      let lastMonthLastDate = new Date(year, month, 0).getDate();
-      for (let i = dayIndex-1; i>=0; i--){
-        const fullDate = `${year}${leftPad(month)}${leftPad(lastMonthLastDate)}`;
-        weekArr[i] = {
-          date : lastMonthLastDate,
-          fullDate : fullDate,
-          diary: diaryDateData.filter(el => el == fullDate.length >= 1),
-          currentMonth : false,
-        }
-        lastMonthLastDate--;
-      }
-    }
-    // // 이전 달 날짜 출력
-    // 이번 달 날짜 출력
-    for (let date=1; date<=lastDate.getDate(); date++){
-      const fullDate = `${year}${leftPad(month+1)}${leftPad(date)}`
-      weekArr[dayIndex] = {
-        date: date,
-        fullDate : fullDate,
-        diary: diaryDateData.filter(el => el==fullDate).length>=1,
-        currentMonth : true
-      }
-      if (dayIndex == 6 || date == lastDate.getDate()){
-        // 마지막 인덱스일 경우
-        // 다음 달 날짜 출력
-        if (date == lastDate.getDate()){
-          let nextMonthDate = 1;
-          for (let i = lastDate.getDay()+1; i<=6; i++){
-            const fullDate = `${year}${leftPad(month+2)}${leftPad(nextMonthDate)}}`
-            weekArr[i] = {
-            date: nextMonthDate,
-            fullDate: fullDate,
-            diary: diaryDateData.filter(el => el == fullDate).length >= 1,
-            currentMonth: false,
-            }
-            nextMonthDate++;
-          }
-        }
-        // // 다음 달 날짜 출력
-        // week 배열이 다 찼을 경우 calendarArr 에 push하고 week 배열 초기화
-        calendarArr.push(weekArr);
-        weekArr = Array(7).fill("");
-        dayIndex = 0;
-      } else{
-        dayIndex++;
-      }
-        
-    }
-    // // 이번 달 날짜 출력   
-    return calendarArr;
-  }
+    year: now.getFullYear(),
+    month: now.getMonth(),
+    date: now.getDate(),
+  };
+  const todayFullDate = `${today.year}${leftPad(today.month + 1)}${leftPad(
+    today.date,
+  )}`;
+  const week = ['일', '월', '화', '수', '목', '금', '토'];
   // // 캘린더 생성 함수
   const [month, setMonth] = useState(today.month);
-  const [year,setYear] = useState(today.year);
-  const [selectedDate, setSelectedDate] = useState("");
+  const [year, setYear] = useState(today.year);
+  const [selectedDate, setSelectedDate] = useState('');
   const thisMonthCalendar = makeMonthCalendar(year, month);
   const handleSetYear = type => {
-    switch (type){
-      case "prev": 
-        if (month != 0){
-          setMonth(month-1);
+    switch (type) {
+      case 'prev':
+        if (month != 0) {
+          setMonth(month - 1);
+        } else {
+          setMonth(11);
+          setYear(year - 1);
         }
-        else {setMonth(11); setYear(year-1);}
         break;
-      case "next" :
-        if(month != 11){
-          setMonth(month + 1);        
+      case 'next':
+        if (month != 11) {
+          setMonth(month + 1);
         } else {
           setMonth(0);
           setYear(year + 1);
         }
         break;
     }
-  }
+  };
 
-  return(
-    <View style={{backgroundColor: '#ddd'}}>
+  return (
+    <CalendarWrap>
       {/* 캘린더 헤더 */}
-      <View style={{flexDirection:'row'}}>
-        <TouchableOpacity onPress={()=>{handleSetYear("prev")}}>
+      <Header>
+        <TouchableOpacity
+          onPress={() => {
+            handleSetYear('prev');
+          }}>
           {/* left btn */}
-          <Text>◀</Text>
+          <MonthChangeBtn source={Icons.Left} resizeMode="contain" />
         </TouchableOpacity>
-        <View>
-          <Text>{year}.</Text>
-          <Text>{month + 1}</Text>
-        </View>
-        <TouchableOpacity onPress={()=>{handleSetYear("next")}}> 
+        <HeaderTextContainer>
+          {/* 년, 월 표시 */}
+          <HeaderText display="none">{year}년</HeaderText>
+          <HeaderText>{month + 1}월</HeaderText>
+        </HeaderTextContainer>
+        <TouchableOpacity
+          onPress={() => {
+            handleSetYear('next');
+          }}>
           {/* right btn */}
-          <Text>▶</Text>
+          <MonthChangeBtn source={Icons.Right} resizeMode="contain" />
         </TouchableOpacity>
-      </View>
+      </Header>
       {/* // 캘린더 헤더 */}
-      <View>
-        <View style={{flexDirection:'row'}}>
+      <Contents>
+        <WeekContainer>
           {/* 주 표시 */}
-          {week.map(el => {return <Text key={el} style={{width: 40,}}>{el}</Text>})}
-        </View>
-          {/* 캘린더 본문 */}
-        <View>
-          {thisMonthCalendar.map((dayRow, idx)=> {
-            return(
+          {week.map(el => {
+            return <WeekText key={el}>{el}</WeekText>;
+          })}
+        </WeekContainer>
+        {/* 캘린더 본문 */}
+        <DateContainer>
+          {thisMonthCalendar.map((dayRow, idx) => {
+            return (
               // row
-              <View key ={`week${idx}`} style={{flexDirection:'row'}}>
-                {dayRow.map((dayCell) => {
+              <DayRow key={`week${idx}`}>
+                {dayRow.map(dayCell => {
                   return (
                     // cell
-                    <View key={dayCell.fullDate}  style={{width: 40,}}>
-                      <Text>{dayCell.date}</Text>
-                    </View>
-                  )
+                    <DateItem
+                      key={dayCell.fullDate}
+                      onPress={() => {
+                        setSelectedDate(dayCell.fullDate);
+                        console.log(
+                          selectedDate,
+                          dayCell.fullDate,
+                          todayFullDate,
+                          dayCell.currentMonth,
+                        );
+                      }}>
+                      {dayCell.fullDate == todayFullDate ? (
+                        <Fragment>
+                          <TodayIcon
+                            source={Icons.Today}
+                            resizeMode="contain"
+                          />
+                          <DateItemText
+                            currentMonth={dayCell.currentMonth ? true : false}
+                            today={true}
+                            selected={
+                              selectedDate == dayCell.fullDate ? true : false
+                            }
+                            diary={dayCell.diary}>
+                            {/* 해당 월에 해당하는 날짜만 보이도록 */}
+                            {dayCell.currentMonth ? dayCell.date : ''}
+                            {/* 해당 월에 해당하는 날짜만 보이도록 */}
+                          </DateItemText>
+                        </Fragment>
+                      ) : (
+                        <DateItemText
+                          currentMonth={dayCell.currentMonth ? true : false}
+                          today={false}
+                          selected={
+                            selectedDate == dayCell.fullDate ? true : false
+                          }
+                          diary={dayCell.diary}>
+                          {/* 해당 월에 해당하는 날짜만 보이도록 */}
+                          {dayCell.currentMonth ? dayCell.date : ''}
+                          {/* 해당 월에 해당하는 날짜만 보이도록 */}
+                        </DateItemText>
+                      )}
+                    </DateItem>
+                  );
                 })}
-              </View>
-            )
+              </DayRow>
+            );
           })}
-        </View>
-          {/* //캘린더 본문 */}
-      </View>
-    </View>
-  )
-}
+        </DateContainer>
+        {/* //캘린더 본문 */}
+      </Contents>
+    </CalendarWrap>
+  );
+};
 
 export default Calendar;

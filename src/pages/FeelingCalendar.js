@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 // components
 import {DefaultText, DayCounter, Calendar} from '~/components/index';
 // util
-import {useDidMountEffect} from '~/utils/index';
+import {useDidMountEffect, leftPad} from '~/utils/index';
 // lib
 // import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import {LocaleConfig} from 'react-native-calendars';
@@ -90,12 +90,6 @@ const FeelingCalendar = () => {
     //  mount시에만 실행
     const now = new Date();
 
-    function leftPad(value) {
-      if (value >= 10) {
-        return value;
-      }
-      return `0${value}`;
-    }
     function toStringByFormatting(source, delimiter = '-') {
       const year = source.getFullYear();
       const month = leftPad(source.getMonth() + 1);
