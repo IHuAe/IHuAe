@@ -1,23 +1,21 @@
-import {atom} from 'recoil';
+import {atom, DefaultValue} from 'recoil';
 // AsyncStorage
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const syncState =
-  key =>
-  ({setSelf, onSet}) => {
-    const savedState = AsyncStorage.getItem(key);
-    if (savedState != null) {
-      console.log(savedState);
-      setSelf(JSON.parse(savedState));
-      // 초기값 지정
-    }
-    onSet((newVal, oldVal, isReset) => {
-      // 값이 변경될 때마다 값을 동기화
-      isReset
-        ? AsyncStorage.removeItem(key)
-        : AsyncStorage.setItem(key, JSON.stringify(newVal));
-    });
-  };
+
+const syncAsyncStorage = key => ({setSelf, onSet}) => {
+  setSelf(AsyncStorage.getItem(key).then(savedVal =>
+    savedVal != null ?
+    JSON.parse(savedVal)
+    : new DefaultValue() // Abort initialization if no value was stored
+    ));
+  onSet((newVal, oldVal, isReset) => {
+    // 상태기 변경되었을 때, AsyncStorage와 동기화
+    isReset ?
+    AsyncStorage.removeItem(key)
+    : AsyncStorage.setItem(key, JSON.stringify(newVal));
+  });
+}
 
 const dayState = atom({
   key: 'dayState', // 유니크 ID
@@ -27,28 +25,20 @@ const dayState = atom({
     initDay: new Date(),
   },
   effects: [
+    syncAsyncStorage('dayState'),
     ({onSet}) => {
-      onSet(newVal => {
-        console.log('new value! : ' + newVal, newVal.dayCount);
-        // AsyncStorage.setItem('dayState', newVal);
-      });
-    },
-    () => {
-      AsyncStorage.setItem(
-        'dayState',
-        JSON.stringify({
-          dayCount: 1,
-          initDay: 2,
-        }),
-      );
-      AsyncStorage.getItem('dayState', (err, result) => {
-        if (err) {
-          throw err;
+      onSet((newVal, oldVal, isReset) => {
+        const nowTime = new Date().getTime();
+        const initTime = new Date(newVal.initDay).getTime();
+        const hour_gap = (nowTime-initTime)/1000/60/60;
+        console.log(hour_gap);
+        if (hour_gap >= 24){
+          console.log('24시간 지남')
+        } else{
+          console.log('아직 안 지남')
         }
-        const parseResult = JSON.parse(result);
-        console.log(parseResult);
-      });
-    },
+      })
+    }
   ],
 });
 

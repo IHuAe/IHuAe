@@ -21,4 +21,12 @@ const calculatedWeek = selector({
   },
 });
 
+// const resetDay = selector({
+//   key: 'resetDay',
+//   get: ({get}) => {
+//     const day = get(dayState);
+
+//   }
+// })
+
 export {calculatedWeek};

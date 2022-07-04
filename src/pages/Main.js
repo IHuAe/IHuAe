@@ -127,8 +127,8 @@ const Main = () => {
           onPress={() => {
             console.log('onpress start: ' + dayStateVal.dayCount);
             setDayStateVal({
+              ...dayStateVal,
               dayCount: dayStateVal.dayCount + 1,
-              initDay: dayStateVal.initDay + 1,
             });
             console.log('onpress end: ' + dayStateVal.dayCount);
           }}

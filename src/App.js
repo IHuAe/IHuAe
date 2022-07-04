@@ -1,7 +1,7 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, Suspense} from 'react';
 import type {Node} from 'react';
 // import tag
-import {StatusBar} from 'react-native';
+import {StatusBar, View, Text} from 'react-native';
 // react-navigation
 import {NavigationContainer} from '@react-navigation/native';
 // recoil
@@ -16,10 +16,12 @@ import {saveState} from '~/utils';
 const App: () => Node = () => {
   return (
     <RecoilRoot>
+      <Suspense fallback={<View><Text>Loading...</Text></View>}>
       <NavigationContainer>
         <StatusBar backgroundColor="#fff" barStyle="dark-content" />
         <TabNavigator />
       </NavigationContainer>
+      </Suspense>
     </RecoilRoot>
   );
 };
