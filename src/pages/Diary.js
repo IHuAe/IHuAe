@@ -6,7 +6,7 @@ import {DefaultText, DefaultBoldText} from '~/components';
 // lib
 import CalendarStrip from 'react-native-calendar-strip';
 import {useRecoilValue} from 'recoil';
-import {calculatedWeek} from '~/atoms/selectors';
+import {dayCount} from '~/atoms/selectors';
 // asset
 import {Icons} from '~/assets';
 
@@ -83,7 +83,7 @@ const WriteBtnIcon = styled.Image`
 `;
 
 const Diary = () => {
-  const weekState = useRecoilValue(calculatedWeek);
+  const weekState = useRecoilValue(dayCount);
   return (
     <DiaryContainer>
       <DiaryTitleArea>
@@ -92,7 +92,7 @@ const Diary = () => {
       <CalendarContainer>
         {/* 달력 추가 영역 */}
         {/* https://www.npmjs.com/package/react-native-calendar-strip */}
-        <Week>{weekState + '주차'}</Week>
+        <Week>{weekState.weekCount + '주차'}</Week>
         <CalendarStrip          
           style={{ height: '100%', paddingTop:10, marginBottom:20, }}
           innerStyle ={{  justifyContent:'center',}}

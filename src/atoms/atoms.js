@@ -1,4 +1,4 @@
-import {atom, DefaultValue} from 'recoil';
+import {atom, DefaultValue,} from 'recoil';
 // AsyncStorage
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -17,29 +17,19 @@ const syncAsyncStorage = key => ({setSelf, onSet}) => {
   });
 }
 
-const dayState = atom({
-  key: 'dayState', // 유니크 ID
+const initDay = atom({
+  key: 'initDay',
   default: {
-    // 기본값
-    dayCount: 1,
-    initDay: new Date(),
+    initDayInfo: new Date(),
   },
   effects: [
-    syncAsyncStorage('dayState'),
+    syncAsyncStorage('initDay'),   
     ({onSet}) => {
-      onSet((newVal, oldVal, isReset) => {
-        const nowTime = new Date().getTime();
-        const initTime = new Date(newVal.initDay).getTime();
-        const hour_gap = (nowTime-initTime)/1000/60/60;
-        console.log(hour_gap);
-        if (hour_gap >= 24){
-          console.log('24시간 지남')
-        } else{
-          console.log('아직 안 지남')
-        }
+      onSet((newVal, oldVal) => {
+        console.log(newVal, oldVal)
       })
     }
   ],
 });
 
-export {dayState};
+export {initDay};

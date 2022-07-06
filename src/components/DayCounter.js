@@ -2,7 +2,7 @@ import React from 'react';
 // import tag
 import {Text} from 'react-native';
 import {useRecoilState, useRecoilValue} from 'recoil';
-import {dayState} from '~/atoms/atoms';
+import {dayCount} from '~/atoms/selectors';
 
 const DayCounterStyle = {
   color: '#FFBF6A',
@@ -12,8 +12,8 @@ const DayCounterStyle = {
 };
 
 const DayCounter = () => {
-  const dayCount = useRecoilValue(dayState);
-  return <Text style={DayCounterStyle}>D+{dayCount.dayCount}</Text>;
+  const dayState = useRecoilValue(dayCount);
+  return <Text style={DayCounterStyle}>D+{dayState.dayCount}</Text>;
 };
 
 export default DayCounter;

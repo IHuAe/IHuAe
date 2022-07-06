@@ -15,7 +15,6 @@ import {
 // asset
 import {Icons, CardImg} from '~/assets';
 import {useRecoilState} from 'recoil';
-import {dayState} from '~/atoms/atoms';
 // style
 const MainContainer = styled.View`
   background: #ffffff;
@@ -88,7 +87,7 @@ const TodayQuestionTitle = styled(DefaultText)`
 const Main = () => {
   // Modal state
   const [modalVisible, setModalVisible] = useState(false);
-  const [dayStateVal, setDayStateVal] = useRecoilState(dayState);
+  // const dayStateVal = useRecoilState(initDay);
 
   return (
     <MainContainer>
@@ -122,7 +121,7 @@ const Main = () => {
       </TodayFeelContainer>
       <TodayQuestionContainer>
         <TodayQuestionTitle>오늘의 문답 모음</TodayQuestionTitle>
-        <Button
+        {/* <Button
           title="테스트 코드"
           onPress={() => {
             console.log('onpress start: ' + dayStateVal.dayCount);
@@ -132,7 +131,7 @@ const Main = () => {
             });
             console.log('onpress end: ' + dayStateVal.dayCount);
           }}
-        />
+        /> */}
       </TodayQuestionContainer>
       <MainModal
         modalVisible={modalVisible}
