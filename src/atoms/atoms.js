@@ -2,18 +2,31 @@ import {atom, DefaultValue,} from 'recoil';
 // AsyncStorage
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-const syncAsyncStorage = key => ({setSelf, onSet}) => {
-  setSelf(AsyncStorage.getItem(key).then(savedVal =>
-    savedVal != null ?
-    JSON.parse(savedVal)
-    : new DefaultValue() // Abort initialization if no value was stored
-    ));
-  onSet((newVal, oldVal, isReset) => {
-    // 상태기 변경되었을 때, AsyncStorage와 동기화
-    isReset ?
-    AsyncStorage.removeItem(key)
-    : AsyncStorage.setItem(key, JSON.stringify(newVal));
+const AsyncStorageEffect = key => ({setSelf, onSet, trigger}) => {
+  const loadPersisted = async () => {    
+    const savedVal = await AsyncStorage.getItem(key);
+    console.log(typeof(savedVal));
+    console.log(savedVal);
+    if (savedVal != null && savedVal != 'null'){
+      console.log('load');
+      setSelf(JSON.parse(savedVal));
+      console.log(JSON.parse(savedVal));
+    }
+  }
+  if (trigger === 'get') {
+    console.log('get');
+    loadPersisted();
+  }
+  onSet((newVal, _, isReset) => {
+    if (isReset){
+      console.log('isreset');
+      AsyncStorage.removeItem(key);
+    } else{
+      AsyncStorage.removeItem(key);
+      console.log('new value store');
+      console.log(newVal);
+      AsyncStorage.setItem(key, JSON.stringify(newVal));
+    }
   });
 }
 
@@ -23,12 +36,23 @@ const initDay = atom({
     initDayInfo: new Date(),
   },
   effects: [
-    syncAsyncStorage('initDay'),   
-    ({onSet}) => {
-      onSet((newVal, oldVal) => {
-        console.log(newVal, oldVal)
-      })
-    }
+    ({onSet , setSelf, resetSelf}) => {
+      onSet((newVal, oldVal) => {    
+
+        if (typeof(newVal.initDayInfo) == 'string'){
+          setSelf({initDayInfo: new Date(newVal.initDayInfo)});
+        }
+        
+        console.log('newval : ');
+        console.log(newVal);
+        console.log(typeof(newVal.initDayInfo));
+        console.log('oldval : ');
+        console.log(oldVal);
+        console.log(typeof(oldVal.initDayInfo));
+              });      
+    },
+    AsyncStorageEffect('initDay'),
+    
   ],
 });
 
