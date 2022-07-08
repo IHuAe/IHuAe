@@ -113,7 +113,7 @@ const FeelingCalendar = () => {
   return (
     <CalendarContainer>
       <DayCounterContainer>
-        <DayCounter />
+        {/* <DayCounter /> */}
       </DayCounterContainer>
       <Calendar/>
       {/* <Calendar

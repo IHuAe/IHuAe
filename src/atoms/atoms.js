@@ -1,55 +1,59 @@
-import {atom} from 'recoil';
+import {atom, DefaultValue,} from 'recoil';
 // AsyncStorage
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const syncState =
-  key =>
-  ({setSelf, onSet}) => {
-    const savedState = AsyncStorage.getItem(key);
-    if (savedState != null) {
-      console.log(savedState);
-      setSelf(JSON.parse(savedState));
-      // 초기값 지정
+const AsyncStorageEffect = key => ({setSelf, onSet, trigger}) => {
+  const loadPersisted = async () => {    
+    const savedVal = await AsyncStorage.getItem(key);
+    console.log(typeof(savedVal));
+    console.log(savedVal);
+    if (savedVal != null && savedVal != 'null'){
+      console.log('load');
+      setSelf(JSON.parse(savedVal));
+      console.log(JSON.parse(savedVal));
     }
-    onSet((newVal, oldVal, isReset) => {
-      // 값이 변경될 때마다 값을 동기화
-      isReset
-        ? AsyncStorage.removeItem(key)
-        : AsyncStorage.setItem(key, JSON.stringify(newVal));
-    });
-  };
+  }
+  if (trigger === 'get') {
+    console.log('get');
+    loadPersisted();
+  }
+  onSet((newVal, _, isReset) => {
+    if (isReset){
+      console.log('isreset');
+      AsyncStorage.removeItem(key);
+    } else{
+      AsyncStorage.removeItem(key);
+      console.log('new value store');
+      console.log(newVal);
+      AsyncStorage.setItem(key, JSON.stringify(newVal));
+    }
+  });
+}
 
-const dayState = atom({
-  key: 'dayState', // 유니크 ID
+const initDay = atom({
+  key: 'initDay',
   default: {
-    // 기본값
-    dayCount: 1,
-    initDay: new Date(),
+    initDayInfo: new Date(),
   },
   effects: [
-    ({onSet}) => {
-      onSet(newVal => {
-        console.log('new value! : ' + newVal, newVal.dayCount);
-        // AsyncStorage.setItem('dayState', newVal);
-      });
-    },
-    () => {
-      AsyncStorage.setItem(
-        'dayState',
-        JSON.stringify({
-          dayCount: 1,
-          initDay: 2,
-        }),
-      );
-      AsyncStorage.getItem('dayState', (err, result) => {
-        if (err) {
-          throw err;
+    ({onSet , setSelf, resetSelf}) => {
+      onSet((newVal, oldVal) => {    
+
+        if (typeof(newVal.initDayInfo) == 'string'){
+          setSelf({initDayInfo: new Date(newVal.initDayInfo)});
         }
-        const parseResult = JSON.parse(result);
-        console.log(parseResult);
-      });
+        
+        console.log('newval : ');
+        console.log(newVal);
+        console.log(typeof(newVal.initDayInfo));
+        console.log('oldval : ');
+        console.log(oldVal);
+        console.log(typeof(oldVal.initDayInfo));
+              });      
     },
+    AsyncStorageEffect('initDay'),
+    
   ],
 });
 
-export {dayState};
+export {initDay};
