@@ -25,6 +25,7 @@ const icons = {
 import {HeaderOption, FolderMenu} from '~/components/Header';
 // page
 import Main from '~/pages/Main';
+import Msg from '~/pages/Msg';
 
 // import styled-component
 import styled, {css} from 'styled-components/native';
@@ -102,8 +103,8 @@ const App: () => Node = () => {
                   tabBarLabel:() => {return null},
         }}/>
         <Tab.Screen
-            name="Main4"
-            component={Main}            
+            name="Msg"
+            component={Msg}
             options={{
                 tabBarIcon: ({ focused }) => (
                     <Image
