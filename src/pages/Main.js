@@ -14,11 +14,8 @@ import {
 } from '~/components';
 // asset
 import {Icons, CardImg} from '~/assets';
-import {useRecoilState, useRecoilValue} from 'recoil';
+import {useRecoilState} from 'recoil';
 import {initDay} from '../atoms/atoms';
-
-// asyncStorage
-import AsyncStorage from '@react-native-async-storage/async-storage';
 // style
 const MainContainer = styled.View`
   background: #ffffff;
@@ -93,30 +90,6 @@ const Main = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [testVal, setTestVal] = useRecoilState(initDay);
 
-  // test func
-  const resetDay = () => {
-    const dayState = testVal.initDayInfo;
-    setTestVal({
-      nowInfo: new Date().toString(),
-      initDayInfo: new Date().toString(),
-    });
-    console.log('reset');
-    console.log(new Date().toString());
-  };
-
-  const addDay = () => {
-    const dayState = testVal.initDayInfo;
-    console.log('testVal');
-    console.log(testVal);
-    console.log('testVal.initDayInfo');
-    console.log(typeof testVal.initDayInfo);
-    const nowDay = new Date(dayState);
-    console.log(nowDay);
-    const nextDay = nowDay.getDate() - 1;
-    const setNextDay = new Date(nowDay.setDate(nextDay)).toString();
-    setTestVal({initDayInfo: setNextDay});
-  };
-
   return (
     <MainContainer>
       <DayCounterContainer>
@@ -149,22 +122,6 @@ const Main = () => {
       </TodayFeelContainer>
       <TodayQuestionContainer>
         <TodayQuestionTitle>오늘의 문답 모음</TodayQuestionTitle>
-        <Button
-          title="테스트 코드"
-          onPress={() => {
-            resetDay();
-            console.log('현재 state 상태');
-            console.log(testVal);
-          }}
-        />
-        <Button
-          title="하루 추가"
-          onPress={() => {
-            addDay();
-            console.log('현재 state 상태');
-            console.log(testVal);
-          }}
-        />
       </TodayQuestionContainer>
       <MainModal
         modalVisible={modalVisible}

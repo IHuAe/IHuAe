@@ -24,6 +24,34 @@ const AsyncStorageEffect =
     });
   };
 
+let isTimer = false;
+
+const updateTime = setSelf => {
+  if (isTimer != false) {
+    isTimer = true;
+    console.log('timer');
+    const timerFunc = setTimeout(() => {
+      isTimer = false;
+      setSelf(new Date().toString());
+      clearTimeout(timerFunc);
+      console.log('update Time');
+      updateTime();
+    }, 60000);
+  }
+};
+
+const nowDay = atom({
+  key: 'nowDay',
+  default: new Date().toString(),
+  effects: [
+    ({onSet, setSelf, resetSelf}) => {
+      onSet(() => {
+        updateTime(setSelf);
+      });
+    },
+  ],
+});
+
 const initDay = atom({
   key: 'initDay',
   default: {
@@ -33,19 +61,21 @@ const initDay = atom({
   effects: [
     AsyncStorageEffect('initDay'),
     ({onSet, setSelf, resetSelf}) => {
-      onSet((newVal, oldVal) => {
-        console.log('newval');
-        console.log(newVal);
-        console.log('oldval');
-        console.log(oldVal);
+      onSet(newVal => {
         setSelf({
           ...newVal,
           nowInfo: new Date().toString(),
         });
       });
-      onSet(() => {});
     },
   ],
 });
 
-export {initDay};
+const message = atom({
+  key: 'message',
+  default: [],
+  // id, message, sendTime
+  effects: [AsyncStorageEffect('chatMessage')],
+});
+
+export {initDay, nowDay, message};

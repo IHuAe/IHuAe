@@ -208,12 +208,12 @@ const Calendar = () => {
                       key={dayCell.fullDate}
                       onPress={() => {
                         setSelectedDate(dayCell.fullDate);
-                        console.log(
-                          selectedDate,
-                          dayCell.fullDate,
-                          todayFullDate,
-                          dayCell.currentMonth,
-                        );
+                        // console.log(
+                        //   selectedDate,
+                        //   dayCell.fullDate,
+                        //   todayFullDate,
+                        //   dayCell.currentMonth,
+                        // );
                       }}>
                       {dayCell.fullDate == todayFullDate ? (
                         <Fragment>
