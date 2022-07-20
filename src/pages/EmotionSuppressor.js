@@ -14,9 +14,11 @@ import styled from 'styled-components/native';
 import {DefaultText, ChatBubble} from '~/components';
 // util
 import {useDidMountEffect} from '~/utils';
-import {Children} from 'react/cjs/react.production.min';
 // asset
 import {Icons} from '~/assets';
+import {useRecoilState, useRecoilValue} from 'recoil';
+import {message} from '../atoms/atoms';
+import {filteredMessage} from '../atoms/selectors';
 
 const EmotionSuppressorContainer = styled.View`
   background-color: #fff;
@@ -91,8 +93,9 @@ const DescriptionComponent = () => {
 const EmotionSuppressor = () => {
   // state
   const [chatText, setChatText] = useState('');
-  const [chatDataList, setChatDataList] = useState([]);
-  const [chatInputHeight, setChatInputHeight] = useState('');
+  const [chatDataList, setChatDataList] = useRecoilState(message);
+  const filteredMessageList = useRecoilValue(filteredMessage);
+  useRecoilState(filteredMessage);
   const [hasNewChat, setHasNewChat] = useState(false);
 
   const scrollRef = useRef();
@@ -109,19 +112,17 @@ const EmotionSuppressor = () => {
     const msgData = {
       id: 'msgId' + (chatDataList.length + 1),
       message: msg,
-      sendTime: new Date(),
+      sendTime: new Date().toString(),
     };
     const newDataList = [...chatDataList, msgData];
     setChatDataList(newDataList);
-    // 입력창 초기화 및 키보드 닫기(없앨지 말지 회의 필요함)
     setChatText('');
-    // Keyboard.dismiss();
   };
 
   return (
     <EmotionSuppressorContainer>
       <ChatArea
-        data={chatDataList}
+        data={filteredMessageList}
         renderItem={({item}) => {
           return <ChatBubble msg={item.message} />;
         }}
@@ -135,9 +136,6 @@ const EmotionSuppressor = () => {
         {/* 채팅 입력창 */}
         <StyledTextInput
           multiline={true}
-          // onContentSizeChange={(event) => {
-          //   setChatInputHeight(event.nativeEvent.contentSize.height);
-          // }}
           onChange={event => {
             const chat = event.nativeEvent.text;
             setChatText(chat);
