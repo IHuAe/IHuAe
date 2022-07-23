@@ -1,6 +1,7 @@
-import React, { Fragment } from 'react';
+import React, {useEffect, Suspense} from 'react';
 import type {Node} from 'react';
 // import tag
+//<<<<<<< HEAD
 import {
   SafeAreaView,
   ScrollView,
@@ -30,16 +31,22 @@ import Msg from '~/pages/Msg';
 // import styled-component
 import styled, {css} from 'styled-components/native';
 
+//=======
+//import {StatusBar, View, Text} from 'react-native';
+//>>>>>>> f9e4fbc4d72103c27e0e7b2d389d9f3ed6f72f2b
 // react-navigation
-import { CurrentRenderContext, NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Header } from '@react-navigation/stack';
-
-const Tab = createBottomTabNavigator();
-
-// style
+import {NavigationContainer} from '@react-navigation/native';
+// recoil
+import {RecoilRoot} from 'recoil';
+// AsyncStorage
+import AsyncStorage from '@react-native-async-storage/async-storage';
+// component
+import TabNavigator from '~/components/TabNavigator';
+// utils
+import {saveState} from '~/utils';
 
 const App: () => Node = () => {
+//<<<<<<< HEAD
   return (    
     <NavigationContainer>    
       <StatusBar
@@ -121,8 +128,18 @@ const App: () => Node = () => {
         }}/>
     </Tab.Navigator>
   </NavigationContainer>
+//=======
+//  return (
+//    <RecoilRoot>
+//      <Suspense fallback={<View><Text>Loading...</Text></View>}>
+//      <NavigationContainer>
+//        <StatusBar backgroundColor="#fff" barStyle="dark-content" />
+//        <TabNavigator />
+//      </NavigationContainer>
+//      </Suspense>
+//    </RecoilRoot>
+//>>>>>>> f9e4fbc4d72103c27e0e7b2d389d9f3ed6f72f2b
   );
 };
-
 
 export default App;

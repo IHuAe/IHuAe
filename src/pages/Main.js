@@ -1,26 +1,21 @@
 import React, {useState} from 'react';
 // import tag
-import {
-  Text,
-  View,
-  Image,
-  Button,
-  ImageBackground
-} from 'react-native';
+import {Text, View, Image, Button, ImageBackground} from 'react-native';
 // import styled-component
 import styled, {css} from 'styled-components/native';
 // import component
-import ButtonComponent from '~/components/ButtonComponent';
-import {DefaultText, DefaultMediumText, DefaultBoldText} from '~/components/DefaultText';
-import HeaderModal  from '~/components/HeaderModal';
-
-const img = {
-  Img01: require("../assets/card/img01.png"),
-};
-const icon = {
- Smile : require("../assets/icon/ic_smile.png"),
-}
-
+import {
+  DefaultText,
+  DefaultMediumText,
+  DefaultBoldText,
+  MainModal,
+  DayCounter,
+  ButtonComponent,
+} from '~/components';
+// asset
+import {Icons, CardImg} from '~/assets';
+import {useRecoilState} from 'recoil';
+import {initDay} from '../atoms/atoms';
 // style
 const MainContainer = styled.View`
   background: #ffffff;
@@ -32,33 +27,28 @@ const DayCounterContainer = styled.View`
   width: 100%;
   padding: 0 20px;
   margin-top: 23px;
-  margin-bottom: 27px;  
+  margin-bottom: 27px;
 `;
-const DayCounter = styled(DefaultBoldText)`
-  color: #FFBF6A;
-  font-size: 20px;
-`;
+
 const MainCard = styled.View`
   width: 100%;
   height: 238px;
-  
 `;
 
 const MainCardBg = styled.ImageBackground`
   width: 100%;
   height: 100%;
-  
 `;
 
 const MainCardText = styled(DefaultBoldText)`
   padding: 40px 20px;
   color: #847144;
-  font-size: 20px;  
+  font-size: 20px;
 `;
 
 const TodayFeelContainer = styled.View`
   margin-top: 26px;
-  background-color: #FFF3A0;
+  background-color: #fff3a0;
   padding: 20px;
   display: flex;
   flex-direction: row;
@@ -74,7 +64,7 @@ const TodayFeelLeftArea = styled.View`
 
 const TodayFeelTitle = styled(DefaultMediumText)`
   color: #847144;
-  font-size: 20px;  
+  font-size: 20px;
 `;
 
 const TodayFeelIcon = styled.Image`
@@ -92,51 +82,53 @@ const TodayQuestionTitle = styled(DefaultText)`
   font-size: 20px;
   font-weight: 400;
   color: #847144;
-  
 `;
 
 // component
-
 const Main = () => {
   // Modal state
   const [modalVisible, setModalVisible] = useState(false);
-  // const closeModal = () => {
-  //   this.setState({})
-  // }
-  const test = modalVisible ? 'modalvisible' : 'modalVisiblefalse';
-         
-  return(
+  const [testVal, setTestVal] = useRecoilState(initDay);
+
+  return (
     <MainContainer>
       <DayCounterContainer>
-      <DayCounter>D+1</DayCounter>
+        <DayCounter />
       </DayCounterContainer>
-      
+
       <MainCard>
-      <MainCardBg source={img.Img01}>
+        <MainCardBg source={CardImg.Img01}>
           <MainCardText>
             오늘은 좋아하는 걸 {'\n'}
             적어보는 건 어때요?
-          </MainCardText>   
-        </ MainCardBg >     
+          </MainCardText>
+        </MainCardBg>
       </MainCard>
 
-      <TodayFeelContainer>        
-        <TodayFeelLeftArea >
-            <TodayFeelTitle>
-                오늘의 기분       
-            </TodayFeelTitle>  
-            <TodayFeelIcon source={icon.Smile} />
-        </TodayFeelLeftArea>      
-        <ButtonComponent shadow={3} onPress={()=> {setModalVisible(true)}} title="기록하기" round='100px' textColor='#222'/>     
+      <TodayFeelContainer>
+        <TodayFeelLeftArea>
+          <TodayFeelTitle>오늘의 기분</TodayFeelTitle>
+          <TodayFeelIcon source={Icons.Smile} />
+        </TodayFeelLeftArea>
+        <ButtonComponent
+          shadow={3}
+          onPress={() => {
+            setModalVisible(true);
+          }}
+          title="기록하기"
+          round="100px"
+          textColor="#222"
+        />
       </TodayFeelContainer>
       <TodayQuestionContainer>
-        <TodayQuestionTitle>
-         오늘의 문답 모음 
-        </TodayQuestionTitle>        
+        <TodayQuestionTitle>오늘의 문답 모음</TodayQuestionTitle>
       </TodayQuestionContainer>
-      <HeaderModal modalVisible={modalVisible} setModalVisible={setModalVisible} />
+      <MainModal
+        modalVisible={modalVisible}
+        setModalVisible={setModalVisible}
+      />
     </MainContainer>
   );
-}
+};
 
 export default Main;
