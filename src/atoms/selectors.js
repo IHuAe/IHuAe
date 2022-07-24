@@ -25,9 +25,13 @@ const filteredMessage = selector({
   get: async ({get}) => {
     const messageState = await get(message);
     const now = await get(nowDay);
+
     const newMessageList = messageState.filter(el => {
-      const messageDateState = new Date(el.sendTime).getHours();
-      const timeGap = new Date(now).getHours();
+      const messageDateState = new Date(el.sendTime).getTime();
+      // console.log(new Date(el.sendTime));
+      // console.log(messageDateState);
+      const timeGap = new Date(now).getTime();
+      // console.log(timeGap);
       return timeGap - messageDateState <= 86400;
     });
     return newMessageList;
