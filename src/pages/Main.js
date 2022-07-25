@@ -88,7 +88,7 @@ const TodayQuestionTitle = styled(DefaultText)`
 const Main = () => {
   // Modal state
   const [modalVisible, setModalVisible] = useState(false);
-  const [testVal, setTestVal] = useRecoilState(initDay);
+  // const [testVal, setTestVal] = useRecoilState(initDay);
 
   return (
     <MainContainer>
