@@ -6,11 +6,14 @@ const dayCount = selector({
   get: async ({get}) => {
     const dayState = await get(initDay);
     const nowState = await get(nowDay);
+    console.log(dayState, nowState);
     const initDayInfo = new Date(dayState.initDayInfo);
-    const initDate = initDayInfo.getDate();
-    const nowDate = new Date(nowState).getDate();
+    const initDate = initDayInfo.getTime();
+    const nowDate = new Date(nowState).getTime();
 
-    const calculatedDay = nowDate - initDate + 1;
+    const calculatedDay = Math.floor(
+      (nowDate - initDate) / (1000 * 60 * 60 * 24),
+    );
     const week = Math.floor(calculatedDay / 7) + 1;
 
     return {
@@ -28,10 +31,7 @@ const filteredMessage = selector({
 
     const newMessageList = messageState.filter(el => {
       const messageDateState = new Date(el.sendTime).getTime();
-      // console.log(new Date(el.sendTime));
-      // console.log(messageDateState);
       const timeGap = new Date(now).getTime();
-      // console.log(timeGap);
       return timeGap - messageDateState <= 86400;
     });
     return newMessageList;
