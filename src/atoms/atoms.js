@@ -45,7 +45,8 @@ const nowDay = atom({
   default: new Date().toString(),
   effects: [
     ({onSet, setSelf, resetSelf}) => {
-      onSet(() => {
+      onSet(newVal => {
+        console.log('set self');
         updateTime(setSelf);
       });
     },

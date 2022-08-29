@@ -15,7 +15,7 @@ import {
 // asset
 import {Icons, CardImg} from '~/assets';
 import {useRecoilState} from 'recoil';
-import {initDay} from '../atoms/atoms';
+import {nowDay} from '../atoms/atoms';
 // style
 const MainContainer = styled.View`
   background: #ffffff;
@@ -32,7 +32,7 @@ const DayCounterContainer = styled.View`
 
 const MainCard = styled.View`
   width: 100%;
-  height: 238px;
+  padding: 32px 0;
 `;
 
 const MainCardBg = styled.ImageBackground`
@@ -84,45 +84,50 @@ const TodayQuestionTitle = styled(DefaultText)`
   color: #847144;
 `;
 
+const MainHeader = styled.View`
+  width: 100%;
+  border-radius: 0px 0px 15px 15px;
+`;
+
 // component
 const Main = () => {
   // Modal state
   const [modalVisible, setModalVisible] = useState(false);
-  // const [testVal, setTestVal] = useRecoilState(initDay);
+  // const [testVal, setTestVal] = useRecoilState(nowDay);
 
   return (
     <MainContainer>
-      <DayCounterContainer>
-        <DayCounter />
-      </DayCounterContainer>
+      <MainHeader>
+        <Text>
+          <DayCounter />
+        </Text>
+        <Text>오늘의 기분을 표현해보세요</Text>
+      </MainHeader>
+      <View>
+        <Text>하루문답</Text>
+        <View>
+          <Text>요즘 가장 하고 싶은 게 뭐예요?</Text>
+          <Text onPress={setModalVisible.bind(this, true)}>기록하기</Text>
+        </View>
+      </View>
 
       <MainCard>
-        <MainCardBg source={CardImg.Img01}>
+        <Image
+          style={{
+            // resizeMode: 'contain',
+            width: 295,
+            height: 453,
+          }}
+          source={CardImg.Img01}
+        />
+        {/* <MainCardBg source={CardImg.Img01}>
           <MainCardText>
             오늘은 좋아하는 걸 {'\n'}
             적어보는 건 어때요?
           </MainCardText>
-        </MainCardBg>
+        </MainCardBg> */}
       </MainCard>
 
-      <TodayFeelContainer>
-        <TodayFeelLeftArea>
-          <TodayFeelTitle>오늘의 기분</TodayFeelTitle>
-          <TodayFeelIcon source={Icons.Smile} />
-        </TodayFeelLeftArea>
-        <ButtonComponent
-          shadow={3}
-          onPress={() => {
-            setModalVisible(true);
-          }}
-          title="기록하기"
-          round="100px"
-          textColor="#222"
-        />
-      </TodayFeelContainer>
-      <TodayQuestionContainer>
-        <TodayQuestionTitle>오늘의 문답 모음</TodayQuestionTitle>
-      </TodayQuestionContainer>
       <MainModal
         modalVisible={modalVisible}
         setModalVisible={setModalVisible}

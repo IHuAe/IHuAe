@@ -20,6 +20,7 @@ const FolderMenu = () => {
 
 const HeaderOption = {
   // header : (navigation) => (<Header />),
+  headerShown: false,
   headerTitle: "이후애",
   // title
   headerTitleStyle: {
