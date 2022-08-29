@@ -15,94 +15,94 @@ const Tab = createBottomTabNavigator();
 const TabNavigator = () => {
   return (
     <Tab.Navigator screenOptions={HeaderOption}>
-{/* Main */}
-<Tab.Screen
-  name="Main"
-  component={Main}
-  options={{
-    headerRight: () => <FolderMenu />,
-    tabBarIcon: ({focused}) => (
-      <Image
-        style={{
-          tintColor: focused ? '#FFBF6A' : '#C4C4C4',
-          resizeMode: 'contain',
-          height: 31,
-          width: 31,
+      {/* Main */}
+      <Tab.Screen
+        name="Main"
+        component={Main}
+        options={{
+          headerRight: () => <FolderMenu />,
+          tabBarIcon: ({focused}) => (
+            <Image
+              style={{
+                tintColor: focused ? '#8291E6' : null,
+                resizeMode: 'contain',
+                height: 31,
+                width: 31,
+              }}
+              source={Icons.Home}
+            />
+          ),
+          tabBarLabel: () => {
+            return null;
+          },
         }}
-        source={Icons.Home}
       />
-    ),
-    tabBarLabel: () => {
-      return null;
-    },
-  }}
-/>
-{/* Calendar */}
-<Tab.Screen
-  name="Calendar"
-  component={FeelingCalendar}
-  options={{
-    tabBarIcon: ({focused}) => (
-      <Image
-        style={{
-          tintColor: focused ? '#FFBF6A' : '#C4C4C4',
-          resizeMode: 'contain',
-          height: 31,
-          width: 31,
+      {/* Calendar */}
+      <Tab.Screen
+        name="Calendar"
+        component={FeelingCalendar}
+        options={{
+          tabBarIcon: ({focused}) => (
+            <Image
+              style={{
+                tintColor: focused ? '#8291E6' : null,
+                resizeMode: 'contain',
+                height: 31,
+                width: 31,
+              }}
+              source={Icons.Cal}
+            />
+          ),
+          tabBarLabel: () => {
+            return null;
+          },
         }}
-        source={Icons.Cal}
       />
-    ),
-    tabBarLabel: () => {
-      return null;
-    },
-  }}
-/>
-{/* Diary */}
-<Tab.Screen
-  name="Diary"
-  component={Diary}
-  options={{
-    headerTitle: '이후애',
-    tabBarIcon: ({focused}) => (
-      <Image
-        style={{
-          tintColor: focused ? '#FFBF6A' : '#C4C4C4',
-          resizeMode: 'contain',
-          height: 31,
-          width: 31,
+      {/* Diary */}
+      <Tab.Screen
+        name="Diary"
+        component={Diary}
+        options={{
+          headerTitle: '이후애',
+          tabBarIcon: ({focused}) => (
+            <Image
+              style={{
+                tintColor: focused ? '#8291E6' : null,
+                resizeMode: 'contain',
+                height: 31,
+                width: 31,
+              }}
+              source={Icons.Edit}
+            />
+          ),
+          tabBarLabel: () => {
+            return null;
+          },
         }}
-        source={Icons.Edit}
       />
-    ),
-    tabBarLabel: () => {
-      return null;
-    },
-  }}
-/>
-{/* Emotion Suppressor */}
-<Tab.Screen
-  name="Emotion Suppressor"
-  component={EmotionSuppressor}
-  options={{
-    tabBarIcon: ({focused}) => (
-      <Image
-        style={{
-          tintColor: focused ? '#FFBF6A' : '#C4C4C4',
-          resizeMode: 'contain',
-          height: 31,
-          width: 31,
+      {/* Emotion Suppressor */}
+      <Tab.Screen
+        name="Emotion Suppressor"
+        component={EmotionSuppressor}
+        options={{
+          tabBarIcon: ({focused}) => (
+            <Image
+              style={{
+                tintColor: focused ? '#8291E6' : null,
+                resizeMode: 'contain',
+                height: 31,
+                width: 31,
+              }}
+              source={Icons.Message}
+            />
+          ),
+          tabBarLabel: () => {
+            return null;
+          },
         }}
-        source={Icons.Message}
       />
-    ),
-    tabBarLabel: () => {
-      return null;
-    },
-  }}
-/>
-</Tab.Navigator>
-  )
-}
+    </Tab.Navigator>
+  );
+};
 
 export default TabNavigator;

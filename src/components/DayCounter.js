@@ -5,8 +5,8 @@ import {useRecoilState, useRecoilValue} from 'recoil';
 import {dayCount} from '~/atoms/selectors';
 
 const DayCounterStyle = {
-  color: '#FFBF6A',
-  fontSize: 20,
+  color: '#8291E6',
+  fontSize: 24,
   fontFamily: 'SpoqaHanSansNeo-Bold',
   fontWeight: '600',
 };

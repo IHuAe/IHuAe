@@ -6,7 +6,6 @@ const dayCount = selector({
   get: async ({get}) => {
     const dayState = await get(initDay);
     const nowState = await get(nowDay);
-    console.log(dayState, nowState);
     const initDayInfo = new Date(dayState.initDayInfo);
     const initDate = initDayInfo.getTime();
     const nowDate = new Date(nowState).getTime();
