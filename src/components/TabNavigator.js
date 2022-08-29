@@ -24,7 +24,7 @@ const TabNavigator = () => {
           tabBarIcon: ({focused}) => (
             <Image
               style={{
-                tintColor: focused ? '#8291E6' : '#C4C4C4',
+                tintColor: focused ? '#8291E6' : null,
                 resizeMode: 'contain',
                 height: 31,
                 width: 31,
@@ -45,7 +45,7 @@ const TabNavigator = () => {
           tabBarIcon: ({focused}) => (
             <Image
               style={{
-                tintColor: focused ? '#8291E6' : '#C4C4C4',
+                tintColor: focused ? '#8291E6' : null,
                 resizeMode: 'contain',
                 height: 31,
                 width: 31,
@@ -67,7 +67,7 @@ const TabNavigator = () => {
           tabBarIcon: ({focused}) => (
             <Image
               style={{
-                tintColor: focused ? '#8291E6' : '#C4C4C4',
+                tintColor: focused ? '#8291E6' : null,
                 resizeMode: 'contain',
                 height: 31,
                 width: 31,
@@ -88,7 +88,7 @@ const TabNavigator = () => {
           tabBarIcon: ({focused}) => (
             <Image
               style={{
-                tintColor: focused ? '#8291E6' : '#C4C4C4',
+                tintColor: focused ? '#8291E6' : null,
                 resizeMode: 'contain',
                 height: 31,
                 width: 31,

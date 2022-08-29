@@ -1,6 +1,13 @@
 import React, {useState} from 'react';
 // import tag
-import {Text, View, Image, Button, ImageBackground} from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  Button,
+  ImageBackground,
+  TouchableOpacity,
+} from 'react-native';
 // import styled-component
 import styled, {css} from 'styled-components/native';
 // import component
@@ -18,75 +25,93 @@ import {useRecoilState} from 'recoil';
 import {nowDay} from '../atoms/atoms';
 // style
 const MainContainer = styled.View`
-  background: #ffffff;
+  background: #f6f8fd;
+  padding-bottom: 69px;
   height: 100%;
+  overflow: hidden;
 `;
-const DayCounterContainer = styled.View`
-  display: flex;
-  justify-content: flex-start;
+
+const MainHeader = styled.View`
   width: 100%;
-  padding: 0 20px;
-  margin-top: 23px;
-  margin-bottom: 27px;
+  padding: 18px 20px 30px 20px;
+  background: #fff;
 `;
 
-const MainCard = styled.View`
-  width: 100%;
-  padding: 32px 0;
-`;
-
-const MainCardBg = styled.ImageBackground`
-  width: 100%;
-  height: 100%;
-`;
-
-const MainCardText = styled(DefaultBoldText)`
-  padding: 40px 20px;
-  color: #847144;
-  font-size: 20px;
-`;
-
-const TodayFeelContainer = styled.View`
-  margin-top: 26px;
-  background-color: #fff3a0;
-  padding: 20px;
-  display: flex;
+const MainHeaderTopContainer = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 `;
 
-const TodayFeelLeftArea = styled.View`
-  display: flex;
+const MainHeaderTopText = styled(DefaultBoldText)`
+  color: #8291e6;
+  font-size: 12px;
+`;
+
+const TodayFeelContainer = styled.View`
   flex-direction: row;
   align-items: center;
 `;
 
-const TodayFeelTitle = styled(DefaultMediumText)`
-  color: #847144;
-  font-size: 20px;
-`;
-
-const TodayFeelIcon = styled.Image`
+const TodayFeelIcon = styled.View`
   width: 28px;
   height: 28px;
-  margin-left: 6px;
+  border-radius: 100px;
+  border: 2px dashed #8291e6;
+  margin-left: 15px;
 `;
 
 const TodayQuestionContainer = styled.View`
-  padding: 0 20px;
-  margin-top: 25px;
+  margin-top: 38px;
 `;
 
-const TodayQuestionTitle = styled(DefaultText)`
-  font-size: 20px;
-  font-weight: 400;
-  color: #847144;
+const TodayQuestionTitle = styled(DefaultBoldText)`
+  height: 25px;
+  color: #8291e6;
+  font-size: 12px;
 `;
 
-const MainHeader = styled.View`
+const TodayQuestionTextWrap = styled.View`
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const TodayQuestionText = styled(DefaultMediumText)`
+  font-size: 15px;
+  color: #8291e6;
+`;
+
+const TodayQuestionWriteButton = styled.TouchableOpacity`
+  width: 82px;
+  height: 28px;
+  border-radius: 5px;
+  background: #8996f3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const TodayQuestionWriteButtonText = styled(DefaultMediumText)`
+  font-size: 12px;
+  color: #fff;
+`;
+
+const MainCardImgContainer = styled.View`
   width: 100%;
-  border-radius: 0px 0px 15px 15px;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 69px;
+  flex-direction: row;
+`;
+
+const MainCard = styled.View`
+  display: flex;
+  flex-grow: 1;
+  flex-shrink: 1;
+  width: 100%;
+  overflow: hidden;
 `;
 
 // component
@@ -97,35 +122,67 @@ const Main = () => {
 
   return (
     <MainContainer>
-      <MainHeader>
-        <Text>
+      {/* COMPONENT HEADER */}
+      <MainHeader
+        style={{
+          borderRadius: 15,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 32,
+          },
+          shadowOpacity: 0.14,
+          shadowRadius: 5,
+          elevation: 16,
+        }}>
+        <MainHeaderTopContainer>
+          {/* COMPONENT DAY COUNTER */}
           <DayCounter />
-        </Text>
-        <Text>오늘의 기분을 표현해보세요</Text>
+          {/* COMPONENT 오늘의 기분 표현 */}
+          <TodayFeelContainer>
+            <MainHeaderTopText>오늘의 기분을 표현해보세요</MainHeaderTopText>
+            <TodayFeelIcon />
+          </TodayFeelContainer>
+        </MainHeaderTopContainer>
+        {/* COMPONENT 하루 문답 */}
+        <TodayQuestionContainer>
+          <TodayQuestionTitle>하루문답</TodayQuestionTitle>
+          <TodayQuestionTextWrap>
+            <TodayQuestionText>
+              요즘 가장 하고 싶은 게 뭐예요?
+            </TodayQuestionText>
+            {/* COMPONENT 하루문답 기록하기 버튼 */}
+            <TodayQuestionWriteButton
+              style={{
+                shadowColor: '#000',
+                shadowOffset: {
+                  width: 0,
+                  height: 32,
+                },
+                shadowOpacity: 0.25,
+                shadowRadius: 5,
+                elevation: 5,
+              }}
+              onPress={setModalVisible.bind(this, true)}>
+              <TodayQuestionWriteButtonText>
+                기록하기
+              </TodayQuestionWriteButtonText>
+            </TodayQuestionWriteButton>
+          </TodayQuestionTextWrap>
+        </TodayQuestionContainer>
       </MainHeader>
-      <View>
-        <Text>하루문답</Text>
-        <View>
-          <Text>요즘 가장 하고 싶은 게 뭐예요?</Text>
-          <Text onPress={setModalVisible.bind(this, true)}>기록하기</Text>
-        </View>
-      </View>
 
+      {/* COMPONENT CARD */}
       <MainCard>
-        <Image
-          style={{
-            // resizeMode: 'contain',
-            width: 295,
-            height: 453,
-          }}
-          source={CardImg.Img01}
-        />
-        {/* <MainCardBg source={CardImg.Img01}>
-          <MainCardText>
-            오늘은 좋아하는 걸 {'\n'}
-            적어보는 건 어때요?
-          </MainCardText>
-        </MainCardBg> */}
+        <MainCardImgContainer>
+          <Image
+            style={{
+              width: 295,
+              height: 453,
+            }}
+            source={CardImg.Img01}
+          />
+        </MainCardImgContainer>
       </MainCard>
 
       <MainModal
