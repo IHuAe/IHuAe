@@ -2,7 +2,13 @@ import React, {useState, useEffect} from 'react';
 import {View, Text, ToastAndroid, Image} from 'react-native';
 import styled from 'styled-components/native';
 // components
-import {DefaultText, DayCounter, Calendar} from '~/components/index';
+import {
+  DefaultText,
+  DefaultMediumText,
+  DefaultBoldText,
+  DayCounter,
+  Calendar,
+} from '~/components/index';
 // util
 import {useDidMountEffect, leftPad} from '~/utils/index';
 // lib
@@ -55,25 +61,72 @@ import {Icons} from '~/assets';
 // LocaleConfig.defaultLocale = 'fr';
 
 const CalendarContainer = styled.View`
-  background: #ffffff;
+  background: #f6f8fd;
   height: 100%;
+  padding-bottom: 94px;
+`;
+
+const CalendarContainerTop = styled.View`
+  height: 426px;
+  padding: 0 36px;
+  background: #fff;
+`;
+
+const CalendarContainerTitle = styled.View`
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+`;
+
+const CalendarContainerTitleText = styled(DefaultMediumText)`
+  color: #4a4a4a;
+  font-size: 16px;
+`;
+
+const TodayFeelingContainer = styled.View`
+  margin-top: 28px;
   padding: 0 20px;
+  flex-grow: 1;
+  flex-shrink: 1;
 `;
 
-const DayCounterContainer = styled.View`
-  margin-top: 23px;
+const TodayFeelingContainerTitleText = styled(DefaultBoldText)`
+  font-size: 14px;
+  color: #4a4a4a;
 `;
 
-const DiaryContainer = styled.View`
-  margin-top: 7px;
-  background-color: #f3f3f3;
-  padding: 10px 16px;
-  border-radius: 5px;
+const TodayFeelingContent = styled.View`
+  background: #fff;
+  padding: 23px 25px;
+  margin-top: 16px;
+  border-radius: 8px;
+  height: 100%;
+  flex-grow: 1;
+  flex-shrink: 1;
 `;
 
-const StyledDefaultText = styled(DefaultText)`
-  color: #000;
-  font-size: 13px;
+const TodayFeelingContentTitleContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+`;
+
+const TodayFeelingIcon = styled.View`
+  width: 46px;
+  height: 46px;
+  border-radius: 100px;
+  border: 2px dashed #8291e6;
+  margin-right: 16px;
+`;
+
+const TodayFeelingContentTitleText = styled(DefaultText)`
+  font-size: 14px;
+  color: #4a4a4a;
+`;
+
+const TodayFeelingDiary = styled(DefaultText)`
+  margin-top: 22px;
+  font-size: 14px;
+  color: #6d6d6d;
 `;
 
 const DirectionArrowStyle = {
@@ -112,62 +165,53 @@ const FeelingCalendar = () => {
 
   return (
     <CalendarContainer>
-      <DayCounterContainer>
-        {/* <DayCounter /> */}
-      </DayCounterContainer>
-      <Calendar/>
-      {/* <Calendar
-        style={{marginTop: 18}}
-        monthFormat={'M월'}
-        onDayPress={day => {
-          setSelectedDay(
-            day.year +
-              '-' +
-              day.dateString.split('-')[1] +
-              '-' +
-              day.dateString.split('-')[2],
-          );
-        }}
-        markedDates={{
-          [selectedDay]: {
-            selected: true,
-            marked: true,
-            selectedColor: 'rgb(76,174,249)',
+      <CalendarContainerTop
+        style={{
+          borderBottomLeftRadius: 23,
+          borderBottomRightRadius: 23,
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 32,
           },
-        }}
-        renderArrow={direction => (
-          <Image
-            style={DirectionArrowStyle}
-            source={direction === 'left' ? Icons.Left : Icons.Right}
-          />
-        )}
-        theme={{
-          selectedDayBackgroundColor: '#00adf5',
-          selectedDayTextColor: '#ffffff',
-          textDayFontFamily: 'SpoqaHanSansNeo-Regular',
-          textMonthFontFamily: 'SpoqaHanSansNeo-Bold',
-          textDayHeaderFontFamily: 'SpoqaHanSansNeo-Bold',
-          textDayFontWeight: '400',
-          textMonthFontWeight: '600',
-          textDayHeaderFontWeight: '600',
-          textDayFontSize: 10,
-          textSectionTitleColor: '#000',
-          dayTextColor: '#000',
-          monthTextColor: '#545454',
-          textDisabledColor: 'transparent',
-          textMonthFontSize: 20,
-          calendarBackground: '#f3f3f3',
-          backgroundColor: '#f3f3f3',
-          selectedDayBackgroundColor: '#A8D5EF',
-        }}
-        enableSwipeMonths={true}
-      /> */}
-      <DiaryContainer>
-        <StyledDefaultText>{selectedDate}일</StyledDefaultText>
-        <StyledDefaultText style={{marginTop: 16}}>
-          햇병아리똥같은날
-        </StyledDefaultText>
-      </DiaryContainer>
+          shadowOpacity: 0.14,
+          shadowRadius: 5,
+          elevation: 8,
+        }}>
+        {/* COMPONENT 페이지 헤더 */}
+        <CalendarContainerTitle>
+          <CalendarContainerTitleText>캘린더</CalendarContainerTitleText>
+        </CalendarContainerTitle>
+        {/* COMPONENT 달력 */}
+        <Calendar />
+      </CalendarContainerTop>
+      {/* COMPONENT 오늘의 기분 */}
+      <TodayFeelingContainer>
+        <View>
+          <TodayFeelingContainerTitleText>
+            오늘의 기분
+          </TodayFeelingContainerTitleText>
+        </View>
+        <TodayFeelingContent
+          style={{
+            shadowColor: '#000',
+            shadowOffset: {
+              width: 0,
+              height: 2,
+            },
+            shadowOpacity: 0.14,
+            shadowRadius: 5,
+            elevation: 8,
+          }}>
+          <TodayFeelingContentTitleContainer>
+            <TodayFeelingIcon></TodayFeelingIcon>
+            <TodayFeelingContentTitleText>
+              오늘은 어떤 기분이 드나요?
+            </TodayFeelingContentTitleText>
+          </TodayFeelingContentTitleContainer>
+          <TodayFeelingDiary>(기분에 대해서 기록해보세요)</TodayFeelingDiary>
+        </TodayFeelingContent>
+      </TodayFeelingContainer>
     </CalendarContainer>
   );
 };
