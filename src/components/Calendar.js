@@ -25,7 +25,7 @@ import Icon from 'react-native-ionicons';
 // import {DefaultText, DefaultBoldText, DefaultMediumText} from '~/components/DefaultText';
 
 const CalendarWrap = styled.View`
-  background: #f3f3f3;
+  border: 1px solid red;
 `;
 const Header = styled.View`
   width: 100%;
@@ -34,13 +34,12 @@ const Header = styled.View`
   justify-content: space-between;
   align-items: center;
   padding: 0 32px;
-  background-color: #bababa;
 `;
 const HeaderTextContainer = styled.View`
   flex-direction: row;
 `;
 const HeaderText = styled(DefaultBoldText)`
-  color: #545454;
+  color: #4a4a4a;
   font-size: 20px;
 
   ${props =>
@@ -52,20 +51,19 @@ const HeaderText = styled(DefaultBoldText)`
 `;
 
 const MonthChangeBtn = styled.ImageBackground`
-  width: 12px;
-  height: 16px;
+  width: 14px;
+  height: 18px;
 `;
 
-const Contents = styled.View`
-  padding: 0 20px;
-`;
+const Contents = styled.View``;
 const WeekContainer = styled.View`
   margin-top: 30px;
   flex-direction: row;
+  border: 1px solid red;
 `;
 const WeekText = styled(DefaultBoldText)`
   width: 14.285%;
-  font-size: 10px;
+  font-size: 12px;
   color: #000;
   flex-grow: 1;
   flex-shrink: 0;
@@ -83,17 +81,18 @@ const DateItem = styled.TouchableOpacity`
   padding: 10px 0;
 `;
 const DateItemText = styled(DefaultText)`
-  font-size: 10px;
+  font-size: 12px;
   text-align: center;
 
-  color: ${props => (props.currentMonth ? '#000' : '#aaa')};
+  color: ${props => (props.currentMonth ? '#6D6D6D' : '#aaa')};
   ${props =>
     props.today &&
     props.currentMonth &&
     // 오늘 날짜
     css`
-      color: #fff;
-      font-weight: bold;
+      color: #2d2d2d;
+      font-family: SpoqaHanSansNeo-Bold;
+      font-weight: 600;
     `}
   ${
     // 선택된 날짜
@@ -165,7 +164,7 @@ const Calendar = () => {
 
   return (
     <CalendarWrap>
-      {/* 캘린더 헤더 */}
+      {/* COMPONENT 캘린더 헤더 */}
       <Header>
         <TouchableOpacity
           onPress={() => {
