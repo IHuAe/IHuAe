@@ -24,16 +24,14 @@ import {Fragment} from 'react/cjs/react.production.min';
 import Icon from 'react-native-ionicons';
 // import {DefaultText, DefaultBoldText, DefaultMediumText} from '~/components/DefaultText';
 
-const CalendarWrap = styled.View`
-  border: 1px solid red;
-`;
+const CalendarWrap = styled.View``;
 const Header = styled.View`
   width: 100%;
   height: 45px;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0 32px;
+  padding: 0 24px;
 `;
 const HeaderTextContainer = styled.View`
   flex-direction: row;
@@ -57,28 +55,26 @@ const MonthChangeBtn = styled.ImageBackground`
 
 const Contents = styled.View``;
 const WeekContainer = styled.View`
-  margin-top: 30px;
+  margin-top: 34px;
   flex-direction: row;
-  border: 1px solid red;
+  gap: 20px;
+  justify-content: space-between;
 `;
 const WeekText = styled(DefaultBoldText)`
-  width: 14.285%;
+  width: 24px;
   font-size: 12px;
   color: #000;
-  flex-grow: 1;
-  flex-shrink: 0;
   text-align: center;
 `;
 
 const DayRow = styled.View`
   flex-direction: row;
+  justify-content: space-between;
 `;
 const DateItem = styled.TouchableOpacity`
-  width: 14.285%;
-  flex-grow: 1;
-  flex-shrink: 0;
+  width: 24px;
   position: relative;
-  padding: 10px 0;
+  padding: 16px 0;
 `;
 const DateItemText = styled(DefaultText)`
   font-size: 12px;
@@ -99,7 +95,7 @@ const DateItemText = styled(DefaultText)`
     props =>
       props.selected &&
       css`
-        color: orange;
+        color: #2d2d2d;
       `
   }
  ${
@@ -112,7 +108,7 @@ const DateItemText = styled(DefaultText)`
   }
 `;
 const DateContainer = styled.View`
-  margin-top: 10px;
+  margin-top: 14px;
   margin-bottom: 20px;
 `;
 const TodayIcon = styled.ImageBackground`
@@ -170,11 +166,11 @@ const Calendar = () => {
           onPress={() => {
             handleSetYear('prev');
           }}>
-          {/* left btn */}
+          {/* COMPONENT 이전 달로 이동 버튼 */}
           <MonthChangeBtn source={Icons.Left} resizeMode="contain" />
         </TouchableOpacity>
         <HeaderTextContainer>
-          {/* 년, 월 표시 */}
+          {/* COMPONENT 년, 월 표시 */}
           <HeaderText display="none">{year}년</HeaderText>
           <HeaderText>{month + 1}월</HeaderText>
         </HeaderTextContainer>
@@ -182,14 +178,14 @@ const Calendar = () => {
           onPress={() => {
             handleSetYear('next');
           }}>
-          {/* right btn */}
+          {/* COMPONENT 다음 달로 이동 버튼 */}
           <MonthChangeBtn source={Icons.Right} resizeMode="contain" />
         </TouchableOpacity>
       </Header>
-      {/* // 캘린더 헤더 */}
+      {/* COMPONENT 캘린더 컨텐츠 */}
       <Contents>
+        {/* COMPONENT 주 표시 */}
         <WeekContainer>
-          {/* 주 표시 */}
           {week.map(el => {
             return <WeekText key={el}>{el}</WeekText>;
           })}
@@ -216,10 +212,10 @@ const Calendar = () => {
                       }}>
                       {dayCell.fullDate == todayFullDate ? (
                         <Fragment>
-                          <TodayIcon
+                          {/* <TodayIcon
                             source={Icons.Today}
                             resizeMode="contain"
-                          />
+                          /> */}
                           <DateItemText
                             currentMonth={dayCell.currentMonth ? true : false}
                             today={true}

@@ -67,7 +67,6 @@ const CalendarContainer = styled.View`
 `;
 
 const CalendarContainerTop = styled.View`
-  height: 426px;
   padding: 0 36px;
   background: #fff;
 `;
