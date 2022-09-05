@@ -1,7 +1,9 @@
 import React, {useEffect, Suspense} from 'react';
 import type {Node} from 'react';
 // import tag
+
 import {StatusBar, View, Text} from 'react-native';
+
 // react-navigation
 import {NavigationContainer} from '@react-navigation/native';
 // recoil
