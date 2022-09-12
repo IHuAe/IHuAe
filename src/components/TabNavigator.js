@@ -15,6 +15,18 @@ import {forModalPresentationIOS} from '@react-navigation/stack/lib/typescript/sr
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
+const StackNavigator = () => {
+  return(
+    <Stack.Navigator>
+      <Stack.Screen 
+        name="EmotionSuppressor"
+        component={EmotionSuppressor}
+        options={{headerShown: false}}
+      />
+    </Stack.Navigator>
+  )
+}
+
 const TabNavigator = () => {
   return (
     <>
@@ -86,9 +98,10 @@ const TabNavigator = () => {
         />
         {/* COMPONENT  Emotion Suppressor */}
         <Tab.Screen
-          name="Emotion Suppressor"
-          component={EmotionSuppressor}
+          name="StackNavigator"
+          component={StackNavigator}
           options={{
+            tabBarStyle: {display: "none"},
             tabBarIcon: ({focused}) => (
               <Image
                 style={{
@@ -106,13 +119,6 @@ const TabNavigator = () => {
           }}
         />
       </Tab.Navigator>
-      {/* <Stack.Navigator>
-        <Stack.Screen
-          name="Emotion Suppressor"
-          component={EmotionSuppressor}
-          options={{headerShown: false}}
-        />
-      </Stack.Navigator> */}
     </>
   );
 };

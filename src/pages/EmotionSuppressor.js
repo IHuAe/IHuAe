@@ -11,6 +11,7 @@ import {
   Touchable,
 } from 'react-native';
 import styled from 'styled-components/native';
+import { useNavigation } from '@react-navigation/native';
 // component
 import {DefaultText, DefaultMediumText, ChatBubble} from '~/components';
 // util
@@ -21,10 +22,10 @@ import {useRecoilState, useRecoilValue} from 'recoil';
 import {message} from '../atoms/atoms';
 import {filteredMessage} from '../atoms/selectors';
 
+
 const EmotionSuppressorContainer = styled.View`
   background-color: #fff;
   height: 100%;
-  padding-bottom: 80px;
   justify-content: space-between;
   background-color: #f6f8fd;
 `;
@@ -44,7 +45,7 @@ const EmotionSuppressorHeaderTitle = styled(DefaultMediumText)`
   font-size: 16px;
 `;
 
-const BackBtnArea = styled.View`
+const BackBtnArea = styled.TouchableOpacity`
   height: 100%;
   width: 40px;
   display: flex;
@@ -82,9 +83,10 @@ const DescriptionText = styled(DefaultMediumText)`
 
 const ChatArea = styled.FlatList`
   flex-basis: 100%;
+  flex-grow: 1;
   flex-shrink: 1;
   padding: 0 30px 17px 23px;
-  flex-direction: column;
+  flex-direction: column;  
 `;
 const ChatAreaBottomDummy = styled.View`
   width: 100%;
@@ -97,7 +99,7 @@ const TextInputArea = styled.View`
   padding: 11px 20px;
   background-color: #d8e0f3;
   flex-shrink: 0;
-  height: 58px;
+  height: 58px;  
 `;
 
 const StyledTextInput = styled.TextInput`
@@ -160,6 +162,8 @@ const EmotionSuppressor = () => {
   // PARAM ref
   const scrollRef = useRef();
 
+  const navigation = useNavigation();
+
   // FUNCTION chatDataList 갱신 시마다 스크롤 하단으로 내리기
   useDidMountEffect(() => {
     if (hasNewChat) {
@@ -184,7 +188,7 @@ const EmotionSuppressor = () => {
     <EmotionSuppressorContainer>
       {/* COMPONENT header */}
       <EmotionSuppressorHeader>
-        <BackBtnArea>
+        <BackBtnArea activeOpacity={1} onPress={()=> navigation.goBack()}>
           <BackBtnIcon source={Icons.Back} />
         </BackBtnArea>
         <EmotionSuppressorHeaderTitle>감정 억제기</EmotionSuppressorHeaderTitle>
