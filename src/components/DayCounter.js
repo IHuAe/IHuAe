@@ -11,9 +11,9 @@ const DayCounterStyle = {
   fontWeight: '600',
 };
 
-const DayCounter = () => {
+const DayCounter = (props) => {
   const dayState = useRecoilValue(dayCount);
-  return <Text style={DayCounterStyle}>D+{dayState.dayCount}</Text>;
+  return <Text style={props.style ? props.style : DayCounterStyle}>D+{dayState.dayCount === 0 ? 'DAY' : dayState.dayCount}</Text>;
 };
 
 export default DayCounter;
