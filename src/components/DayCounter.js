@@ -13,7 +13,7 @@ const DayCounterStyle = {
 
 const DayCounter = () => {
   const dayState = useRecoilValue(dayCount);
-  return <Text style={DayCounterStyle}>D+{dayState.dayCount}</Text>;
+  return <Text style={DayCounterStyle}>D+{dayState.dayCount === 0 ? 'DAY' : dayState.dayCount}</Text>;
 };
 
 export default DayCounter;

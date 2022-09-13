@@ -2,7 +2,7 @@ import React, {useState, useRef} from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, FlatList, ScrollView, Keyboard } from 'react-native';
 import styled  from 'styled-components/native';
 // component
-import {DefaultText, DefaultBoldText} from '~/components';
+import {DefaultText, DefaultBoldText, DayCounter} from '~/components';
 // lib
 import CalendarStrip from 'react-native-calendar-strip';
 import {useRecoilValue} from 'recoil';
@@ -86,13 +86,15 @@ const Diary = () => {
   const weekState = useRecoilValue(dayCount);
   return (
     <DiaryContainer>
-      <DiaryTitleArea>
-      <DiaryTitle>내 글 쓰기</DiaryTitle>
-      </DiaryTitleArea>
+      {/* COMPONENT HEADER */}
+      <View>
+        <Text>기록</Text>
+      </View>
+      {/* COMPONENT CALENDAR */}
       <CalendarContainer>
-        {/* 달력 추가 영역 */}
         {/* https://www.npmjs.com/package/react-native-calendar-strip */}
-        <Week>{weekState.weekCount + '주차'}</Week>
+        {/* COMPONENT DDAY Counter */}
+        <DayCounter />
         <CalendarStrip          
           style={{ height: '100%', paddingTop:10, marginBottom:20, }}
           innerStyle ={{  justifyContent:'center',}}
@@ -110,16 +112,41 @@ const Diary = () => {
           }}
           iconStyle={{display:'none'}}
         />
-        {/* // 달력 추가 영역 */}
       </CalendarContainer>
+      {/* COMPONENT 오늘의 문답 */}
       <DiaryContentsContainer>
+        <DiaryContentsTitle>오늘의 문답</DiaryContentsTitle>
         <DiaryContents>
-          <DiaryContentsTitle>오늘의 문답</DiaryContentsTitle>
-          <DiaryContentsQuestion>당신이 가장 좋아하는 장소는 어디인가요?</DiaryContentsQuestion>
+          <View>
+            <Text>Q. 1</Text>
+            <DiaryContentsQuestion>X와 어떻게 헤어졌는지 {'\n'}자세히 말해줄래요?</DiaryContentsQuestion>
+          </View>
+          <View>
+            <TouchableOpacity activeOpacity={1}>
+              <Text>내 답변 보기</Text>
+            </TouchableOpacity>
+          </View>
         </DiaryContents>
       </DiaryContentsContainer>
+      {/* COMPONENT 오늘의 기록 */}
+      <View>
+        <View>
+          <Text>오늘의 기록</Text>
+        </View>
+        <View>
+         <Text>우울한 날</Text>
+         <TouchableOpacity activeOpacity={1}>
+          <Text>삭제</Text>
+         </TouchableOpacity>
+        </View>
+        <View>
+          <Text>오늘은 기분이 좀 그래. 같이 있다가 너가 없으니 너무너무 허전해.</Text>
+        </View>
+      </View>
+      {/* COMPONENT 글쓰기 버튼 */}
       <WriteBtn activeOpacity={0.7}>
-        <WriteBtnIcon source={Icons.Union} />
+        <Text>+</Text>
+        {/* <WriteBtnIcon source={Icons.Union} /> */}
       </WriteBtn>
     </DiaryContainer>    
   )
