@@ -1,28 +1,56 @@
-import {atom} from 'recoil';
+import { atom } from 'recoil';
 // AsyncStorage
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+// FUNCTION storage data effect
 const AsyncStorageEffect =
   key =>
-  ({setSelf, onSet, trigger}) => {
-    const loadPersisted = async () => {
-      const savedVal = await AsyncStorage.getItem(key);
-      if (savedVal != null && savedVal != 'null') {
-        setSelf(JSON.parse(savedVal));
+    ({ setSelf, onSet, trigger }) => {
+
+      const loadPersisted = async () => {
+        const savedVal = await AsyncStorage.getItem(key);
+
+        if (savedVal != null) {
+          setSelf(JSON.parse(savedVal));
+        }
+      };
+
+      if (trigger === 'get') {
+        loadPersisted();
       }
+
+      onSet((newVal, _, isReset) => {
+        console.log(newVal);
+        if (isReset) {
+          AsyncStorage.removeItem(key);
+        } else {
+          AsyncStorage.removeItem(key);
+          console.log(newVal, key);
+          AsyncStorage.setItem(key, JSON.stringify(newVal));
+        }
+      });
     };
-    if (trigger === 'get') {
-      loadPersisted();
+
+const onLoadData = key => ({ onSet, setSelf, trigger }) => {
+  const loadData = async () => {
+    const savedVal = await AsyncStorage.getItem(key);
+
+    if (savedVal != null) {
+      console.log(savedVal)
+      setSelf(JSON.parse(savedVal));
+
+    } else {
+      console.log('no data');
+      AsyncStorage.removeItem(key);
+      AsyncStorage.setItem(key, JSON.stringify(new Date().toString()));
     }
-    onSet((newVal, _, isReset) => {
-      if (isReset) {
-        AsyncStorage.removeItem(key);
-      } else {
-        AsyncStorage.removeItem(key);
-        AsyncStorage.setItem(key, JSON.stringify(newVal));
-      }
-    });
-  };
+  }
+
+  if (trigger === 'get') {
+    loadData();
+  }
+
+}
 
 let isTimer = false;
 
@@ -40,38 +68,28 @@ const updateTime = setSelf => {
   }
 };
 
+// PARAM 현재 날짜
 const nowDay = atom({
   key: 'nowDay',
   default: new Date().toString(),
-  effects: [
-    ({onSet, setSelf, resetSelf}) => {
-      onSet(newVal => {
-        console.log('set self');
-        updateTime(setSelf);
-      });
-    },
-  ],
 });
 
+// PARAM 앱 최초 실행일
 const initDay = atom({
   key: 'initDay',
-  default: {
-    initDayInfo: new Date().toString(),
-    nowInfo: new Date().toString(),
-  },
+  default: new Date().toString(),
   effects: [
-    AsyncStorageEffect('initDay'),
-    ({onSet, setSelf, resetSelf}) => {
-      onSet(newVal => {
-        setSelf({
-          ...newVal,
-          nowInfo: new Date().toString(),
-        });
-      });
-    },
+    onLoadData('initDay'),
   ],
 });
 
+// PARAM 첫 실행 시
+const isFirstLoaded = atom({
+  key: 'isFirstLoaded',
+  default: false,
+});
+
+// PARAM 메세지
 const message = atom({
   key: 'message',
   default: [],
@@ -79,4 +97,4 @@ const message = atom({
   effects: [AsyncStorageEffect('chatMessage')],
 });
 
-export {initDay, nowDay, message};
+export { isFirstLoaded, initDay, nowDay, message };

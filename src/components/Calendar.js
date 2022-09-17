@@ -1,28 +1,17 @@
-import React, {useState} from 'react';
-import {
-  View,
-  Text,
-  ToastAndroid,
-  Image,
-  TouchableOpacity,
-  ImageBackground,
-} from 'react-native';
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
-import styled, {css} from 'styled-components/native';
+import React, { useEffect, useState } from 'react';
+import { TouchableOpacity } from 'react-native';
+import styled, { css } from 'styled-components/native';
+
 // utils
-import {makeMonthCalendar, leftPad} from '~/utils';
+import { makeMonthCalendar, leftPad } from '~/utils';
 // asset
-import {Icons} from '~/assets';
+import { Icons } from '~/assets';
 // components
-import {
-  DefaultText,
-  DefaultBoldText,
-  DefaultMediumText,
-  DayCounter,
-} from '~/components/DefaultText';
-import {Fragment} from 'react/cjs/react.production.min';
-import Icon from 'react-native-ionicons';
-// import {DefaultText, DefaultBoldText, DefaultMediumText} from '~/components/DefaultText';
+import { DefaultText, DefaultBoldText, } from '~/components/DefaultText';
+import { Fragment } from 'react/cjs/react.production.min';
+import { useNavigation } from '@react-navigation/native';
+import { atom, selector, useRecoilState } from 'recoil';
+import { isFirstLoaded } from '../atoms/atoms';
 
 const CalendarWrap = styled.View``;
 const Header = styled.View`
@@ -91,18 +80,18 @@ const DateItemText = styled(DefaultText)`
       font-weight: 600;
     `}
   ${
-    // 선택된 날짜
-    props =>
-      props.selected &&
-      css`
+  // 선택된 날짜
+  props =>
+    props.selected &&
+    css`
         color: #2d2d2d;
       `
   }
  ${
-    // 일기 기록이 있는 날짜
-    props =>
-      props.diary &&
-      css`
+  // 일기 기록이 있는 날짜
+  props =>
+    props.diary &&
+    css`
         color: purple;
       `
   }
@@ -122,6 +111,22 @@ const TodayIcon = styled.ImageBackground`
 `;
 
 const Calendar = () => {
+  // PARAM first load state
+  const [firstLoad, setFirstLoad] = useRecoilState(isFirstLoaded);
+
+  // PARAM navigation
+  const navigation = useNavigation();
+
+  // FUNCTION first load handler
+  const handleFirstLoad = useEffect(() => {
+    if (firstLoad === false) {
+      navigation.navigate("Main", {});
+      setFirstLoad(true);
+      return;
+    }
+  }, []);
+
+
   const now = new Date();
   const today = {
     year: now.getFullYear(),
@@ -132,11 +137,14 @@ const Calendar = () => {
     today.date,
   )}`;
   const week = ['일', '월', '화', '수', '목', '금', '토'];
-  // // 캘린더 생성 함수
+
+  // PARAM state
   const [month, setMonth] = useState(today.month);
   const [year, setYear] = useState(today.year);
   const [selectedDate, setSelectedDate] = useState('');
   const thisMonthCalendar = makeMonthCalendar(year, month);
+
+  // FUNCTION 년도 변경
   const handleSetYear = type => {
     switch (type) {
       case 'prev':
@@ -157,6 +165,7 @@ const Calendar = () => {
         break;
     }
   };
+
 
   return (
     <CalendarWrap>

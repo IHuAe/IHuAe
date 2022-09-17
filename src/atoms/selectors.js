@@ -1,12 +1,12 @@
-import {selector} from 'recoil';
-import {initDay, nowDay, message} from '~/atoms/atoms';
+import { selector } from 'recoil';
+import { initDay, nowDay, message } from '~/atoms/atoms';
 
 const dayCount = selector({
   key: 'dayCount',
-  get: async ({get}) => {
+  get: async ({ get }) => {
     const dayState = await get(initDay);
     const nowState = await get(nowDay);
-    const initDayInfo = new Date(dayState.initDayInfo);
+    const initDayInfo = new Date(dayState);
     const initDate = initDayInfo.getTime();
     const nowDate = new Date(nowState).getTime();
 
@@ -24,7 +24,7 @@ const dayCount = selector({
 
 const filteredMessage = selector({
   key: 'filteredMessage',
-  get: async ({get}) => {
+  get: async ({ get }) => {
     const messageState = await get(message);
     const now = await get(nowDay);
 
@@ -37,4 +37,4 @@ const filteredMessage = selector({
   },
 });
 
-export {dayCount, filteredMessage};
+export { dayCount, filteredMessage };

@@ -1,27 +1,27 @@
 import React from 'react';
-import {Image} from 'react-native';
+import { Image } from 'react-native';
 // asset
-import {Icons} from '~/assets';
+import { Icons } from '~/assets';
 // header
-import {HeaderOption, FolderMenu} from '~/components';
+import { HeaderOption, FolderMenu } from '~/components';
 // page
-import {Main, FeelingCalendar, EmotionSuppressor, Diary} from '~/pages';
+import { Main, FeelingCalendar, EmotionSuppressor, Diary } from '~/pages';
 
 // react-navigation
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {forModalPresentationIOS} from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/CardStyleInterpolators';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { forModalPresentationIOS } from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/CardStyleInterpolators';
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 const StackNavigator = () => {
-  return(
+  return (
     <Stack.Navigator>
-      <Stack.Screen 
+      <Stack.Screen
         name="EmotionSuppressor"
         component={EmotionSuppressor}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   )
@@ -30,14 +30,16 @@ const StackNavigator = () => {
 const TabNavigator = () => {
   return (
     <>
-      <Tab.Navigator screenOptions={HeaderOption}>
+      <Tab.Navigator screenOptions={HeaderOption}
+        initialRouteName="Calendar"
+      >
         {/* COMPONENT  Main */}
         <Tab.Screen
           name="Main"
           component={Main}
           options={{
             headerRight: () => <FolderMenu />,
-            tabBarIcon: ({focused}) => (
+            tabBarIcon: ({ focused }) => (
               <Image
                 style={{
                   tintColor: focused ? '#8291E6' : null,
@@ -58,7 +60,7 @@ const TabNavigator = () => {
           name="Calendar"
           component={FeelingCalendar}
           options={{
-            tabBarIcon: ({focused}) => (
+            tabBarIcon: ({ focused }) => (
               <Image
                 style={{
                   tintColor: focused ? '#8291E6' : null,
@@ -80,7 +82,7 @@ const TabNavigator = () => {
           component={Diary}
           options={{
             headerTitle: '이후애',
-            tabBarIcon: ({focused}) => (
+            tabBarIcon: ({ focused }) => (
               <Image
                 style={{
                   tintColor: focused ? '#8291E6' : null,
@@ -101,8 +103,8 @@ const TabNavigator = () => {
           name="StackNavigator"
           component={StackNavigator}
           options={{
-            tabBarStyle: {display: "none"},
-            tabBarIcon: ({focused}) => (
+            tabBarStyle: { display: "none" },
+            tabBarIcon: ({ focused }) => (
               <Image
                 style={{
                   tintColor: focused ? '#8291E6' : null,

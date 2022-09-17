@@ -1,14 +1,14 @@
-import React, {useState, useRef} from 'react';
+import React, { useState, useRef } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Image, FlatList, ScrollView, Keyboard } from 'react-native';
-import styled  from 'styled-components/native';
+import styled from 'styled-components/native';
 // component
-import {DefaultText, DefaultMediumText, DefaultBoldText, DayCounter} from '~/components';
+import { DefaultText, DefaultMediumText, DefaultBoldText, DayCounter } from '~/components';
 // lib
 import CalendarStrip from 'react-native-calendar-strip';
-import {useRecoilValue} from 'recoil';
-import {dayCount} from '~/atoms/selectors';
+import { useRecoilValue } from 'recoil';
+import { dayCount } from '~/atoms/selectors';
 // asset
-import {Icons} from '~/assets';
+import { Icons } from '~/assets';
 
 const DiaryContainer = styled.View`
   height: 100%;
@@ -159,7 +159,6 @@ const dayCounterStyle = {
 };
 
 const Diary = () => {
-  const weekState = useRecoilValue(dayCount);
   return (
     <DiaryContainer>
       {/* COMPONENT HEADER */}
@@ -181,23 +180,24 @@ const Diary = () => {
       >
         {/* https://www.npmjs.com/package/react-native-calendar-strip */}
         {/* COMPONENT DDAY Counter */}
-        <DayCounter style={dayCounterStyle}/>
-        <CalendarStrip          
-          style={{padding: 0,}}
-          innerStyle ={{  justifyContent:'center', padding: 0,}}
+        <DayCounter style={dayCounterStyle} />
+        <CalendarStrip
+          style={{ padding: 0, }}
+          innerStyle={{ justifyContent: 'center', padding: 0, }}
           dayContainerStyle={{}}
-          calendarHeaderStyle={{display:'none'}}
+          calendarHeaderStyle={{ display: 'none' }}
           scrollable={true}
           showDayName={false}
           dateNumberStyle={
-            {color: '#000', 
-            fontSize: 15,
-            fontWeight: '400',
-          }}
+            {
+              color: '#000',
+              fontSize: 15,
+              fontWeight: '400',
+            }}
           dateContainerStyle={{
-            backgroundColor:'#fff',
+            backgroundColor: '#fff',
           }}
-          iconStyle={{display:'none'}}
+          iconStyle={{ display: 'none' }}
         />
       </CalendarContainer>
       {/* COMPONENT 오늘의 문답 */}
@@ -205,24 +205,24 @@ const Diary = () => {
         <DiaryContentsTitle>오늘의 문답</DiaryContentsTitle>
         <DiaryContents
         // TODO shadow
-          // style={{
-          //   shadowColor: '#000',
-          //   shadowOffset: {
-          //     width: 0,
-          //     height: -4,
-          //   },
-          //   shadowOpacity: 0.1,
-          //   shadowRadius: 0,
-          //   elevation: 5,
-          // }}
+        // style={{
+        //   shadowColor: '#000',
+        //   shadowOffset: {
+        //     width: 0,
+        //     height: -4,
+        //   },
+        //   shadowOpacity: 0.1,
+        //   shadowRadius: 0,
+        //   elevation: 5,
+        // }}
         >
           <DiaryContentsNumber>Q. 1</DiaryContentsNumber>
-          <View style={{flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>            
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
             <DiaryContentsQuestion>X와 어떻게 헤어졌는지 {'\n'}자세히 말해줄래요?</DiaryContentsQuestion>
             <DiaryWriteBtn activeOpacity={1}>
               <DiaryWriteBtnText>기록하기</DiaryWriteBtnText>
             </DiaryWriteBtn>
-          </View>         
+          </View>
         </DiaryContents>
       </DiaryContentsContainer>
       {/* COMPONENT 오늘의 기록 */}
@@ -239,9 +239,9 @@ const Diary = () => {
             </TouchableOpacity>
           </TodayMemoTitle>
           <TodayMemoContent numberOfLines={1} ellipsizeMode='tail'>
-            오늘은 기분이 좀 그래. 같이 있다가 너가 없으니 너무너무 허전해.          
+            오늘은 기분이 좀 그래. 같이 있다가 너가 없으니 너무너무 허전해.
           </TodayMemoContent>
-        </TodayMemo>     
+        </TodayMemo>
         <TodayMemo>
           <TodayMemoTitle>
             <TodayMemoTitleText numberOfLines={1} ellipsizeMode='tail'>우울한 날</TodayMemoTitleText>
@@ -250,9 +250,9 @@ const Diary = () => {
             </TouchableOpacity>
           </TodayMemoTitle>
           <TodayMemoContent numberOfLines={1} ellipsizeMode='tail'>
-            오늘은 기분이 좀 그래. 같이 있다가 너가 없으니 너무너무 허전해.          
+            오늘은 기분이 좀 그래. 같이 있다가 너가 없으니 너무너무 허전해.
           </TodayMemoContent>
-        </TodayMemo>   
+        </TodayMemo>
       </TodayMemoContainer>
       {/* COMPONENT 글쓰기 버튼 */}
       <WriteBtn activeOpacity={0.7}
@@ -261,7 +261,7 @@ const Diary = () => {
         <WriteBtnText>+</WriteBtnText>
         {/* <WriteBtnIcon source={Icons.Union} /> */}
       </WriteBtn>
-    </DiaryContainer>    
+    </DiaryContainer>
   )
 }
 
